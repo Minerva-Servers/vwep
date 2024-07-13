@@ -56,6 +56,34 @@ hook.Add("HUDPaint", abbreviation .. ".HUDPaint", function()
             draw.SimpleTextOutlined(k .. ": ", smallFont, 10, y, color, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 1, color_black)
             draw.SimpleTextOutlined(v and "true" or "false", smallFont, 10 + w, y, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 1, color_black)
             y = y + 15
+        elseif ( istable(v) ) then
+            if ( table.Count(v) == 0 ) then continue end
+            if ( k == "BaseClass" ) then continue end
+            if ( k == "ActivityTranslate" ) then continue end
+            if ( k == "ActivityTranslateAI" ) then continue end
+
+            w, h = surface.GetTextSize(k .. ": ")
+            draw.SimpleTextOutlined(k .. ": ", smallFont, 10, y, color, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 1, color_black)
+            draw.SimpleTextOutlined("table", smallFont, 10 + w, y, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 1, color_black)
+            y = y + 15
+
+            local info = {}
+            for k2, v2 in pairs(v) do
+                if ( isstring(v2) and string.len(v2) > 0 ) then
+                    table.insert(info, {k2, v2})
+                elseif ( isnumber(v2) ) then
+                    table.insert(info, {k2, tostring(v2)})
+                elseif ( isbool(v2) ) then
+                    table.insert(info, {k2, v2 and "true" or "false"})
+                end
+            end
+
+            for k2, v2 in SortedPairs(info) do
+                w, h = surface.GetTextSize("   - " .. v2[1] .. ": ")
+                draw.SimpleTextOutlined("   - " .. v2[1] .. ": ", smallFont, 10, y, color, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 1, color_black)
+                draw.SimpleTextOutlined(v2[2], smallFont, 10 + w, y, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 1, color_black)
+                y = y + 15
+            end
         end
     end
 end)
