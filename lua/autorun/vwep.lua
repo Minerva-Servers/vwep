@@ -14,10 +14,19 @@ include("vwep/sh_util.lua")
 
 vwep.util:IncludeDir("vwep/modules")
 
-http.Fetch("https://github.com/Minerva-Servers/vwep/blob/main/VERSION.txt", function(body)
+local install = "https://github.com/Minerva-Servers/vwep/archive/refs/heads/main.zip"
+http.Fetch("https://raw.githubusercontent.com/Minerva-Servers/vwep/main/VERSION.txt", function(body)
     if ( body == vwep.info.version ) then
-        vwep.util:Message("You are using the latest version of " .. vwep.info.name .. " (" .. vwep.info.version .. ").", vwep.info.color)
+        if ( SERVER ) then
+            vwep.util:Message("You are using the latest version of " .. vwep.info.name .. " (" .. vwep.info.version .. "). No updates are available.")
+        else
+            vwep.util:Message("This server is using the latest version of " .. vwep.info.name .. " (" .. vwep.info.version .. "). No updates are available.")
+        end
     else
-        vwep.util:Message("You are using an outdated version of " .. vwep.info.name .. " (" .. vwep.info.version .. "). The latest version is " .. body .. ".", vwep.info.color)
+        if ( SERVER ) then
+            vwep.util:Message(Color(255, 0, 0), "You are using an outdated version of " .. vwep.info.name .. " (" .. vwep.info.version .. "). An update is available at " .. install .. ".")
+        else
+            vwep.util:Message(Color(255, 0, 0), "This server is using an outdated version of " .. vwep.info.name .. " (" .. vwep.info.version .. "). An update is available at " .. install .. ".")
+        end
     end
 end)

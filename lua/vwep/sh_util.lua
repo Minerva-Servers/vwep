@@ -14,7 +14,8 @@ end
 function vwep.util:Message(...)
     local args = { ... }
 
-    MsgC(vwep.info.color, "[VWEP] ", Color(255, 255, 255), unpack(args), "\n")
+    MsgC(vwep.info.color, "[VWEP] ", Color(255, 255, 255), unpack(args))
+    Msg("\n")
 end
 
 function vwep.util:Include(fileName, realm)
