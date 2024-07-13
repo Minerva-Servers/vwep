@@ -14,7 +14,7 @@ include("vwep/sh_util.lua")
 
 vwep.util:IncludeDir("vwep/modules")
 
-http.Fetch("https://github.com/Minerva-Servers/vwep/blob/main/version.txt", function(body)
+http.Fetch("https://github.com/Minerva-Servers/vwep/blob/main/VERSION.txt", function(body)
     if ( body == vwep.info.version ) then
         vwep.util:Message("You are using the latest version of " .. vwep.info.name .. " (" .. vwep.info.version .. ").", vwep.info.color)
     else
