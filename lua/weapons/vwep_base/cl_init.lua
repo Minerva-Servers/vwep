@@ -27,7 +27,7 @@ function SWEP:RenderBob(pos, ang)
 
     local ft, ct = FrameTime(), CurTime()
     bobAmount = eased(ft * 4, bobAmount, math.Clamp(vel, 0.05, 1))
-    
+
     local eyeAngles = ply:EyeAngles()
     local forward = eyeAngles:Forward()
     local right = eyeAngles:Right()
@@ -64,7 +64,7 @@ function SWEP:ThinkSway()
 
     local lastAng = self.Sway.LastAng or eyeAng
     local dist = eyeAng - lastAng
-    
+
     dist.p = -dist.p
     dist.y = -dist.y
     dist.r = -dist.r
@@ -75,7 +75,7 @@ function SWEP:ThinkSway()
     dist.p = -math.Clamp(dist.p, -5, 5)
     dist.y = math.Clamp(dist.y, -5, 5)
     dist.r = math.Clamp(dist.r, -5, 5)
-    
+
     self.Sway.Ang = LerpAngle(ft * 50, self.Sway.Ang or dist, dist)
     self.Sway.LastAng = eyeAng
     self.Sway.BeforeAng = lastAng
@@ -89,15 +89,16 @@ function SWEP:RenderSway(pos, ang)
 
     swayRaw.r = -( swayRaw.y * 0.4 ) * 1.5 * sway
 
-    self.Sway.AngSmooth = LerpAngle(ft * 10, self.Sway.AngSmooth or swayRaw, swayRaw)
+    local smoothness = self.Sway.AngSmoothness or 10
+    self.Sway.AngSmooth = LerpAngle(ft * smoothness, self.Sway.AngSmooth or swayRaw, swayRaw)
     local swayAng = self.Sway.AngSmooth * 2
 
 	local mul = ( self.Sway.PosMul or 1 ) + ( self.Sway.Mul or 1 )
     return translate(
-        pos, 
-        ang, 
-        Vector(swayAng.y * 0.1 * mul, 0, -swayAng.p * 0.1 * mul), 
-        swayAng, 
+        pos,
+        ang,
+        Vector(swayAng.y * 0.1 * mul, 0, -swayAng.p * 0.1 * mul),
+        swayAng,
         sway
     )
 end
@@ -118,7 +119,7 @@ function SWEP:RenderIronSights(pos, ang)
     else
         lerpIron = eased(time, lerpIron, 0)
     end
-    
+
     local offset = self.IronSightsPos
 
     if ( self.IronSightsAng ) then
@@ -176,7 +177,7 @@ end
 function SWEP:DrawViewModel()
     local ply = self:GetOwner()
     if ( !IsValid(ply) ) then return end
-    
+
     local vm = ply:GetViewModel()
     if ( !IsValid(vm) ) then return end
 
