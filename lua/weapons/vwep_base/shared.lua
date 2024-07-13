@@ -153,6 +153,10 @@ function SWEP:PrimaryAttack()
     if ( !IsFirstTimePredicted() ) then return end
     if ( !self:CanPrimaryAttack() ) then return end
 
+    if ( self.PrePrimaryAttack ) then
+        self:PrePrimaryAttack()
+    end
+
     self:ShootBullet(self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone)
 
     self:EmitSound(self.Primary.Sound, self.Primary.SoundLevel or 100, self.Primary.SoundPitch or 100, self.Primary.SoundVolume or 1, self.Primary.SoundChannel or CHAN_WEAPON)
@@ -163,6 +167,10 @@ function SWEP:PrimaryAttack()
     ply:ViewPunch(self.Recoil.Punch or Angle(-self.Primary.Recoil, 0, 0))
 
     self:SetNextPrimaryFire(self:CalculateNextPrimaryFire())
+
+    if ( self.PostPrimaryAttack ) then
+        self:PostPrimaryAttack()
+    end
 end
 
 function SWEP:CanIronSight()
