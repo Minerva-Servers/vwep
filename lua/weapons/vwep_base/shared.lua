@@ -52,6 +52,7 @@ SWEP.Primary.SoundVolume = 1 // Sound volume
 SWEP.Primary.SoundChannel = CHAN_WEAPON // Sound channel
 
 // Iron sights settings
+SWEP.IronSightsEnabled = true // Enable iron sights
 SWEP.IronSightsPos = Vector(-5.95, -9.2, 2.7) // Iron sights position
 SWEP.IronSightsAng = Vector(2.6, 1.37, 3.5) // Iron sights angle
 SWEP.IronSightsFOV = 0.75 // Iron sights field of view
@@ -196,13 +197,11 @@ end
 
 function SWEP:SecondaryAttack()
     if ( !IsFirstTimePredicted() ) then return end
-    if ( !self:CanIronSight() ) then return end
 
     if ( self.PreSecondaryAttack ) then
         self:PreSecondaryAttack()
     end
 
-    self:SetIronSights(!self:GetIronSights())
     self:SetNextSecondaryFire(CurTime() + self.IronSightsDelay)
 
     if ( self.PostSecondaryAttack ) then
@@ -331,15 +330,27 @@ function SWEP:Reload()
     end
 end
 
+function SWEP:ThinkIronSights()
+    local ply = self:GetOwner()
+    if ( self:GetIronSights() and !self:CanIronSight() ) then
+        self:SetIronSights(false)
+        return
+    end
+    
+    if ( IsFirstTimePredicted() ) then
+        if ( self:GetIronSights() and !ply:KeyDown(IN_ATTACK2) ) then
+            self:SetIronSights(false)
+        elseif ( !self:GetIronSights() and ply:KeyDown(IN_ATTACK2) and self:CanIronSight() ) then
+            self:SetIronSights(true)
+        end
+    end
+end
+
 function SWEP:Think()
     local ply = self:GetOwner()
     if ( !IsValid(ply) ) then return end
 
-    if ( self:GetIronSights() and !self:CanIronSight() ) then
-        self:SetIronSights(false)
-    elseif ( self:GetIronSights() and !self.IronSightsToggle and !ply:KeyDown(IN_ATTACK2) ) then
-        self:SetIronSights(false)
-    end
+    self:ThinkIronSights()
 
     if ( CLIENT ) then
         self:ThinkSway()
