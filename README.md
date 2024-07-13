@@ -267,6 +267,21 @@ SWEP.Sway.Speed = 1
 - **SWEP.Sway.Scale**: The sway scale.
 - **SWEP.Sway.Speed**: The sway speed.
 
+### Available Functions
+
+- **SWEP:PrePrimaryAttack()**: Called before the primary attack.
+- **SWEP:PostPrimaryAttack()**: Called after the primary attack.
+- **SWEP:PreSecondaryAttack()**: Called before the secondary attack.
+- **SWEP:PostSecondaryAttack()**: Called after the secondary attack.
+- **SWEP:PreShootBullet()**: Called before shooting a bullet.
+- **SWEP:PostShootBullet()**: Called after shooting a bullet.
+- **SWEP:PreShootEffects()**: Called before shooting effects.
+- **SWEP:PostShootEffects()**: Called after shooting effects.
+- **SWEP:PreReload()**: Called before reloading.
+- **SWEP:PostReload()**: Called after reloading.
+- **SWEP:PreReloadFinish()**: Called before finishing the reload.
+- **SWEP:PostReloadFinish()**: Called after finishing the reload.
+
 ## Contributing
 
 You are free to contribute! Aslong as it fits the coding format I am using.
