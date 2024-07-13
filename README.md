@@ -48,8 +48,7 @@ SWEP.Secondary.Ammo = "none" -- No secondary ammo
 -- Weapon settings
 SWEP.HoldType = "pistol" -- Weapon hold type
 SWEP.UseHands = true -- Use hands model
-SWEP.ViewModel = "models/weapons/c_pistol.mdl" -- The model used in first-person view
-SWEP.WorldModel = "models/weapons/w_pistol.mdl" -- The model used in third-person view
+SWEP.Sensitivity = 1 -- Sensitivity when not aiming
 
 -- Primary gun settings
 SWEP.Primary.ClipSize = 18 -- Size of a clip
@@ -92,6 +91,37 @@ SWEP.Reloading.SoundLevel = 60 -- The reload sound level, used for sound distanc
 SWEP.Reloading.SoundPitch = 100 -- The reload sound pitch
 SWEP.Reloading.SoundVolume = 1 -- The reload sound volume
 SWEP.Reloading.SoundChannel = CHAN_WEAPON -- The reload sound channel
+
+-- Viewmodel settings
+SWEP.ViewModel = "models/weapons/c_pistol.mdl" -- The model used in first-person view
+SWEP.ViewModelFOV = 62 -- Viewmodel field of view
+SWEP.ViewModelFlip = false -- Flip the viewmodel
+SWEP.ViewModelOffset = Vector(0, 0, 0) -- Viewmodel offset
+SWEP.ViewModelOffsetAng = Angle(0, 0, 0) -- Viewmodel angle offset
+SWEP.ViewModelScale = 1 -- Viewmodel scale
+SWEP.ViewModelDynamicLights = {
+    --{Pos = Vector(0, 0, 0), Brightness = 1, Size = 128, Decay = 100, R = 255, G = 255, B = 255, DieTime = 0.1} -- Example
+}
+
+SWEP.ViewModelMaterial = "" -- Viewmodel material
+SWEP.ViewModelColor = Color(255, 255, 255, 255) -- Viewmodel color
+SWEP.ViewModelRenderMode = RENDERMODE_NORMAL -- Viewmodel render mode
+SWEP.ViewModelRenderFX = kRenderFxNone -- Viewmodel render fx
+
+-- Worldmodel settings
+SWEP.WorldModel = "models/weapons/w_pistol.mdl" -- The model used in third-person view
+SWEP.WorldModelBone = "ValveBiped.Bip01_R_Hand" -- The bone to attach the worldmodel to, this is required!
+SWEP.WorldModelOffset = Vector(0, 10, 4) -- Worldmodel offset
+SWEP.WorldModelOffsetAng = Angle(0, 0, 180) -- Worldmodel angle offset
+SWEP.WorldModelScale = 1 -- Worldmodel scale
+SWEP.WorldModelDynamicLights = {
+    --{Pos = Vector(0, 0, 0), Brightness = 1, Size = 128, Decay = 100, R = 255, G = 255, B = 255, DieTime = 0.1} -- Example
+}
+
+SWEP.WorldModelMaterial = "" -- Worldmodel material
+SWEP.WorldModelColor = Color(255, 255, 255, 255) -- Worldmodel color
+SWEP.WorldModelRenderMode = RENDERMODE_NORMAL -- Worldmodel render mode
+SWEP.WorldModelRenderFX = kRenderFxNone -- Worldmodel render fx
 
 -- Recoil settings
 SWEP.Recoil = {}
