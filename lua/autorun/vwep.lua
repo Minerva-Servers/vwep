@@ -13,3 +13,11 @@ AddCSLuaFile("vwep/sh_util.lua")
 include("vwep/sh_util.lua")
 
 vwep.util:IncludeDir("vwep/modules")
+
+http.Fetch("https://github.com/Minerva-Servers/vwep/blob/main/version.txt", function(body)
+    if ( body == vwep.info.version ) then
+        vwep.util:Message("You are using the latest version of " .. vwep.info.name .. " (" .. vwep.info.version .. ").", vwep.info.color)
+    else
+        vwep.util:Message("You are using an outdated version of " .. vwep.info.name .. " (" .. vwep.info.version .. "). The latest version is " .. body .. ".", vwep.info.color)
+    end
+end)
