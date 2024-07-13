@@ -223,6 +223,8 @@ function SWEP:CanReload()
     local ply = self:GetOwner()
     if ( !IsValid(ply) ) then return false end
 
+    if ( self:GetReloading() ) then return false end
+
     return self:Clip1() < self.Primary.ClipSize and self:GetOwner():GetAmmoCount(self.Primary.Ammo) > 0
 end
 
