@@ -259,7 +259,8 @@ function SWEP:Reload()
     local duration = vm:SequenceDuration() / vm:GetPlaybackRate()
     self:SetNextPrimaryFire(CurTime() + duration)
 
-    self:EmitSound(self.Reloading.Sound, self.Reloading.SoundLevel or 60, self.Reloading.SoundPitch or 100, self.Reloading.SoundVolume or 1, self.Reloading.SoundChannel or CHAN_WEAPON)
+    local reloadSound, reloadSoundLevel, reloadSoundPitch, reloadSoundVolume, reloadSoundChannel = self.Reloading.Sound, self.Reloading.SoundLevel, self.Reloading.SoundPitch, self.Reloading.SoundVolume, self.Reloading.SoundChannel
+    self:EmitSound(reloadSound, reloadSoundLevel or 60, reloadSoundPitch or 100, reloadSoundVolume or 1, reloadSoundChannel or CHAN_WEAPON)
 
     timer.Simple(duration, function()
         if ( !IsValid(self) ) then return end
