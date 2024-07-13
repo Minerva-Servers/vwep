@@ -14,7 +14,6 @@ include("vwep/sh_util.lua")
 
 vwep.util:IncludeDir("vwep/modules")
 
-local install = "https://github.com/Minerva-Servers/vwep/archive/refs/heads/main.zip"
 http.Fetch("https://raw.githubusercontent.com/Minerva-Servers/vwep/main/VERSION.txt", function(body)
     if ( body == vwep.info.version ) then
         if ( SERVER ) then
