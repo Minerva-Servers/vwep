@@ -104,6 +104,6 @@ vwep.util:IncludeDir("vwep")
 concommand.Add("vwep_print_ammonames", function()
     local ammoTable = game.GetAmmoTypes()
     for k, v in ipairs(ammoTable) do
-        MsgC(vwep.info.color, "[VWEP] ", color_white, " Ammo - " .. v.name .. "\n")
+        MsgC(vwep.info.color, "[VWEP] ", color_white, " Ammo - " .. v .. "\n")
     end
 end)
