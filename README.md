@@ -176,12 +176,11 @@ SWEP.Sway.Speed = 1
 - **SWEP.Spawnable**: Whether the weapon can be spawned via the Q menu.
 - **SWEP.AdminOnly**: Whether the weapon can only be spawned by admins.
 
-### Model and Hold Type
+### Base Weapon Settings
 
 - **SWEP.HoldType**: The hold type of the weapon.
 - **SWEP.UseHands**: Whether to use the hands model.
-- **SWEP.ViewModel**: The model used in first-person view.
-- **SWEP.WorldModel**: The model used in third-person view.
+- **SWEP.Sensitivity**: The sensitivity when not aiming.
 
 ### Primary Weapon Settings
 
@@ -209,9 +208,11 @@ SWEP.Sway.Speed = 1
 
 ### Iron Sights Settings
 
+- **SWEP.IronSightsEnabled**: Whether iron sights are enabled.
 - **SWEP.IronSightsPos**: The position of the iron sights.
 - **SWEP.IronSightsAng**: The angle of the iron sights.
 - **SWEP.IronSightsFOV**: The field of view for the iron sights.
+- **SWEP.IronSightsSensitivity**: The sensitivity when aiming down sights.
 - **SWEP.IronSightsCanMove**: Whether the player can move while iron sighting.
 - **SWEP.IronSightsCanMoveRun**: Whether the player can run while iron sighting.
 - **SWEP.IronSightsDelay**: The delay between iron sights toggling.
@@ -228,6 +229,33 @@ SWEP.Sway.Speed = 1
 - **SWEP.Reloading.SoundPitch**: The reload sound pitch.
 - **SWEP.Reloading.SoundVolume**: The reload sound volume.
 - **SWEP.Reloading.SoundChannel**: The reload sound channel.
+
+### Viewmodel Settings
+
+- **SWEP.ViewModel**: The model used in first-person view.
+- **SWEP.ViewModelFOV**: The viewmodel field of view.
+- **SWEP.ViewModelFlip**: Whether to flip the viewmodel.
+- **SWEP.ViewModelOffset**: The viewmodel offset.
+- **SWEP.ViewModelOffsetAng**: The viewmodel angle offset.
+- **SWEP.ViewModelScale**: The viewmodel scale.
+- **SWEP.ViewModelDynamicLights**: Dynamic lights for the viewmodel.
+- **SWEP.ViewModelMaterial**: The viewmodel material.
+- **SWEP.ViewModelColor**: The viewmodel color.
+- **SWEP.ViewModelRenderMode**: The viewmodel render mode.
+- **SWEP.ViewModelRenderFX**: The viewmodel render fx.
+
+### Worldmodel Settings
+
+- **SWEP.WorldModel**: The model used in third-person view.
+- **SWEP.WorldModelBone**: The bone to attach the worldmodel to.
+- **SWEP.WorldModelOffset**: The worldmodel offset.
+- **SWEP.WorldModelOffsetAng**: The worldmodel angle offset.
+- **SWEP.WorldModelScale**: The worldmodel scale.
+- **SWEP.WorldModelDynamicLights**: Dynamic lights for the worldmodel.
+- **SWEP.WorldModelMaterial**: The worldmodel material.
+- **SWEP.WorldModelColor**: The worldmodel color.
+- **SWEP.WorldModelRenderMode**: The worldmodel render mode.
+- **SWEP.WorldModelRenderFX**: The worldmodel render fx.
 
 ### Recoil Settings
 

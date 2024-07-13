@@ -57,6 +57,7 @@ SWEP.IronSightsEnabled = true // Enable iron sights
 SWEP.IronSightsPos = Vector(-6.035, 0, 3.029) // Iron sights position
 SWEP.IronSightsAng = Vector(0.2, -1.3, 1) // Iron sights angle
 SWEP.IronSightsFOV = 0.75 // Iron sights field of view
+SWEP.IronSightsSensitivity = 0.5 // Iron sights sensitivity
 SWEP.IronSightsCanMove = true // Can the player iron sight while moving?
 SWEP.IronSightsCanMoveRun = false // Can the player iron sight while running?
 SWEP.IronSightsDelay = 0.25 // Delay between iron sights toggling
