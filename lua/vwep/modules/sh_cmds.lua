@@ -1,4 +1,7 @@
-concommand.Add("vwep_print_ammonames", function()
+local abbreviation = vwep.info.abbreviation
+local color = vwep.info.color
+
+concommand.Add(abbreviation:lower() .. "_print_ammonames", function()
     local ammoTable = game.GetAmmoTypes()
     for k, v in ipairs(ammoTable) do
         MsgC(vwep.info.color, "[VWEP] ", color_white, "Ammo - " .. v .. "\n")
@@ -6,11 +9,12 @@ concommand.Add("vwep_print_ammonames", function()
 end)
 
 if ( CLIENT ) then
-    concommand.Add("vwep_toggle_devmode", function(ply)
+    concommand.Add(abbreviation:lower() .. "_toggle_devmode", function(ply)
         if ( !IsValid(ply) ) then return end
 
-        ply:SetNW2Bool("VWEP.DevMode", !ply:GetNW2Bool("VWEP.DevMode", false))
+        local devMode = !ply:GetNWBool(abbreviation .. ".DevMode", false)
+        ply:SetNWBool(abbreviation .. ".DevMode", devMode)
 
-        vwep.util:Notify(ply, "Developer mode has been " .. ( ply:GetNW2Bool("VWEP.DevMode", false) and "enabled" or "disabled" ) .. ".")
+        vwep.util:Notify(ply, "Developer mode has been " .. ( devMode and "enabled" or "disabled" ) .. ".")
     end)
 end
