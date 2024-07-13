@@ -110,10 +110,6 @@ SWEP.WorldModelRenderFX = kRenderFxNone // Worldmodel render fx
 SWEP.Recoil = {}
 SWEP.Recoil.Punch = Angle(0.25, 0, 0) // Punch angle
 
-// Disable the default gmod weapon sway and bob
-SWEP.SwayScale = 0
-SWEP.BobScale = 0
-
 // Bob settings
 SWEP.Bob = {}
 SWEP.Bob.Scale = 1

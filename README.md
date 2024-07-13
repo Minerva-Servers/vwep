@@ -141,10 +141,6 @@ SWEP.WorldModelRenderFX = kRenderFxNone -- Worldmodel render fx
 SWEP.Recoil = {}
 SWEP.Recoil.Punch = Angle(1, 0, 0) -- Punch angle
 
--- Disable the default gmod weapon sway and bob
-SWEP.SwayScale = 0
-SWEP.BobScale = 0
-
 -- Bob settings
 SWEP.Bob = {}
 SWEP.Bob.Scale = 1
@@ -261,12 +257,13 @@ SWEP.Sway.Speed = 1
 
 - **SWEP.Recoil.Punch**: The punch angle for recoil.
 
-### Sway and Bob Settings
+### Bobbing Settings
 
-- **SWEP.SwayScale**: The scale of the sway.
-- **SWEP.BobScale**: The scale of the bob.
 - **SWEP.Bob.Scale**: The bob scale.
 - **SWEP.Bob.Speed**: The bob speed.
+
+### Sway Settings
+
 - **SWEP.Sway.Scale**: The sway scale.
 - **SWEP.Sway.Speed**: The sway speed.
 
