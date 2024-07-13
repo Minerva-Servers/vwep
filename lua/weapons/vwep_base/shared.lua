@@ -26,8 +26,7 @@ SWEP.Secondary.Ammo = "none" // No secondary ammo
 // Weapon settings
 SWEP.HoldType = "pistol" // Weapon hold type
 SWEP.UseHands = true // Use hands model
-SWEP.ViewModel = "models/weapons/c_pistol.mdl" // The model used in first-person view
-SWEP.WorldModel = "models/weapons/w_pistol.mdl" // The model used in third-person view
+SWEP.Sensitivity = 1 // Sensitivity when not aiming
 
 // Primary gun settings
 SWEP.Primary.ClipSize = 18 // Size of a clip
@@ -54,6 +53,7 @@ SWEP.Primary.SoundChannel = CHAN_WEAPON // Sound channel
 SWEP.IronSightsPos = Vector(-5.95, -9.2, 2.7) // Iron sights position
 SWEP.IronSightsAng = Vector(2.6, 1.37, 3.5) // Iron sights angle
 SWEP.IronSightsFOV = 0.75 // Iron sights field of view
+SWEP.IronSightsSensitivity = 0.5 // Iron sights sensitivity
 SWEP.IronSightsCanMove = true // Can the player iron sight while moving?
 SWEP.IronSightsCanMoveRun = false // Can the player iron sight while running?
 SWEP.IronSightsDelay = 0.25 // Delay between iron sights toggling
@@ -70,6 +70,37 @@ SWEP.Reloading.SoundLevel = 60 // The reload sound level, used for sound distanc
 SWEP.Reloading.SoundPitch = 100 // The reload sound pitch
 SWEP.Reloading.SoundVolume = 1 // The reload sound volume
 SWEP.Reloading.SoundChannel = CHAN_WEAPON // The reload sound channel
+
+// Viewmodel settings
+SWEP.ViewModel = "models/weapons/c_pistol.mdl" // The model used in first-person view
+SWEP.ViewModelFOV = 62 // Viewmodel field of view
+SWEP.ViewModelFlip = false // Flip the viewmodel
+SWEP.ViewModelOffset = Vector(0, 0, 0) // Viewmodel offset
+SWEP.ViewModelOffsetAng = Angle(0, 0, 0) // Viewmodel angle offset
+SWEP.ViewModelScale = 1 // Viewmodel scale
+SWEP.ViewModelDynamicLights = {
+    {Pos = Vector(0, 0, 0), Brightness = 1, Size = 1, Decay = 100, R = 255, G = 255, B = 255} // Example
+}
+
+SWEP.ViewModelMaterial = "" // Viewmodel material
+SWEP.ViewModelColor = Color(255, 255, 255, 255) // Viewmodel color
+SWEP.ViewModelRenderMode = RENDERMODE_NORMAL // Viewmodel render mode
+SWEP.ViewModelRenderFX = kRenderFxNone // Viewmodel render fx
+
+// Worldmodel settings
+SWEP.WorldModel = "models/weapons/w_pistol.mdl" // The model used in third-person view
+SWEP.WorldModelBone = "ValveBiped.Bip01_R_Hand" // The bone to attach the worldmodel to
+SWEP.WorldModelOffset = Vector(0, 0, 0) // Worldmodel offset
+SWEP.WorldModelOffsetAng = Angle(0, 0, 0) // Worldmodel angle offset
+SWEP.WorldModelScale = 1 // Worldmodel scale
+SWEP.WorldModelDynamicLights = {
+    {Pos = Vector(0, 0, 0), Brightness = 1, Size = 1, Decay = 100, R = 255, G = 255, B = 255} // Example
+}
+
+SWEP.WorldModelMaterial = "" // Worldmodel material
+SWEP.WorldModelColor = Color(255, 0, 0, 255) // Worldmodel color
+SWEP.WorldModelRenderMode = RENDERMODE_NORMAL // Worldmodel render mode
+SWEP.WorldModelRenderFX = kRenderFxNone // Worldmodel render fx
 
 // Recoil settings
 SWEP.Recoil = {}
@@ -109,6 +140,7 @@ function SWEP:CalculateNextPrimaryFire()
 end
 
 function SWEP:PrimaryAttack()
+    if ( !IsFirstTimePredicted() ) then return end
     if ( !self:CanPrimaryAttack() ) then return end
 
     self:ShootBullet(self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone)
@@ -145,6 +177,7 @@ function SWEP:CanIronSight()
 end
 
 function SWEP:SecondaryAttack()
+    if ( !IsFirstTimePredicted() ) then return end
     if ( !self:CanIronSight() ) then return end
 
     self:SetIronSights(!self:GetIronSights())
@@ -168,9 +201,12 @@ function SWEP:ShootBullet(damage, num_bullets, aimcone)
 end
 
 function SWEP:ShootEffects()
+    local ply = self:GetOwner()
+    if ( !IsValid(ply) ) then return end
+
     self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
-    self:GetOwner():MuzzleFlash()
-    self:GetOwner():SetAnimation(PLAYER_ATTACK1)
+    ply:MuzzleFlash()
+    ply:SetAnimation(PLAYER_ATTACK1)
 end
 
 function SWEP:CanPrimaryAttack()
@@ -184,6 +220,9 @@ function SWEP:CanPrimaryAttack()
 end
 
 function SWEP:CanReload()
+    local ply = self:GetOwner()
+    if ( !IsValid(ply) ) then return false end
+
     return self:Clip1() < self.Primary.ClipSize and self:GetOwner():GetAmmoCount(self.Primary.Ammo) > 0
 end
 
@@ -199,13 +238,19 @@ function SWEP:GetViewModelReloadAnimation()
 end
 
 function SWEP:Reload()
+    if ( !IsFirstTimePredicted() ) then return end
     if ( !self:CanReload() ) then return end
+
+    local ply = self:GetOwner()
+    if ( !IsValid(ply) ) then return end
 
     self:SetIronSights(false)
     self:SetReloading(true)
 
+    ply:SetAnimation(PLAYER_RELOAD)
+
     local vmReload = self:GetViewModelReloadAnimation()
-    local vm = self:GetOwner():GetViewModel()
+    local vm = ply:GetViewModel()
     vm:SendViewModelMatchingSequence(isstring(vmReload) and vm:LookupSequence(vmReload) or vmReload)
 
     local duration = vm:SequenceDuration() / vm:GetPlaybackRate()
