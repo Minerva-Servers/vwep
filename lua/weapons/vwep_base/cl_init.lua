@@ -221,7 +221,7 @@ function SWEP:DrawWorldModel()
     if ( !matrix ) then return end
 
     local pos, ang = matrix:GetTranslation(), matrix:GetAngles()
-    pos, ang = translate(pos, ang, self.WorldModelOffset or Vector(), self.WorldModelOffsetAng or Angle(), self.WorldModelScale or 1)
+    pos, ang = translate(pos, ang, self.WorldModelOffset or Vector(), self.WorldModelOffsetAng or Angle())
 
     WorldModel:SetModel(self.WorldModel)
     WorldModel:SetPos(pos)
@@ -232,6 +232,8 @@ function SWEP:DrawWorldModel()
     WorldModel:SetColor(self.WorldModelColor or Color(255, 255, 255, 255))
     WorldModel:SetRenderMode(self.WorldModelRenderMode or RENDERMODE_NORMAL)
     WorldModel:SetRenderFX(self.WorldModelRenderFX or kRenderFxNone)
+
+    WorldModel:SetModelScale(self.WorldModelScale or 1, 0)
 
     WorldModel:DrawModel()
 
