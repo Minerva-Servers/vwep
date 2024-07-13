@@ -44,7 +44,7 @@ SWEP.Primary.Delay = 0.5 // Delay between shots
 SWEP.Primary.RPM = 400 // Rounds per minute, this is used instead of delay if it's set
 
 // Primary sound settings
-SWEP.Primary.Sound = Sound("Weapon_Pistol.Single") // Primary fire 
+SWEP.Primary.Sound = Sound("Weapon_Pistol.Single") // Primary fire
 SWEP.Primary.SoundLevel = 100 // Sound level, used for sound distance
 SWEP.Primary.SoundPitch = 100 // Sound pitch
 SWEP.Primary.SoundVolume = 1 // Sound volume
@@ -92,6 +92,7 @@ SWEP.Sway.Speed = 1
 function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 0, "IronSights")
     self:NetworkVar("Bool", 1, "Reloading")
+    self:NetworkVar("Bool", 2, "Lowered")
 end
 
 function SWEP:Initialize()
