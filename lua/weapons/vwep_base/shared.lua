@@ -45,6 +45,7 @@ SWEP.Primary.RPM = 400 // Rounds per minute, this is used instead of delay if it
 
 // Primary sound settings
 SWEP.Primary.Sound = Sound("Weapon_Pistol.Single") // Primary fire
+SWEP.Primary.SoundEmpty = Sound("Weapon_Pistol.Empty") // Primary fire when empty
 SWEP.Primary.SoundLevel = 100 // Sound level, used for sound distance
 SWEP.Primary.SoundPitch = 100 // Sound pitch
 SWEP.Primary.SoundVolume = 1 // Sound volume
@@ -212,7 +213,7 @@ end
 
 function SWEP:CanPrimaryAttack()
     if ( self:Clip1() <= 0 ) then
-        self:EmitSound("Weapon_Pistol.Empty")
+        self:EmitSound(self.Primary.SoundEmpty, 60, 100, 1, CHAN_WEAPON)
         self:SetNextPrimaryFire(CurTime() + 0.2)
         return false
     end
