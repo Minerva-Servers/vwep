@@ -53,9 +53,11 @@ SWEP.Primary.SoundVolume = 1 // Sound volume
 SWEP.Primary.SoundChannel = CHAN_WEAPON // Sound channel
 
 // Iron sights settings
+SWEP.IronSightsEnabled = true // Enable iron sights
 SWEP.IronSightsPos = Vector(-6.401, -2.221, 1.029) // Iron sights position
 SWEP.IronSightsAng = Vector(0, 0, 0) // Iron sights angle
 SWEP.IronSightsFOV = 0.75 // Iron sights field of view
+SWEP.IronSightsSensitivity = 0.5 // Iron sights sensitivity
 SWEP.IronSightsCanMove = true // Can the player iron sight while moving?
 SWEP.IronSightsCanMoveRun = false // Can the player iron sight while running?
 SWEP.IronSightsDelay = 0.25 // Delay between iron sights toggling
@@ -107,10 +109,6 @@ SWEP.WorldModelRenderFX = kRenderFxNone // Worldmodel render fx
 // Recoil settings
 SWEP.Recoil = {}
 SWEP.Recoil.Punch = Angle(0.25, 0, 0) // Punch angle
-
-// Disable the default gmod weapon sway and bob
-SWEP.SwayScale = 0
-SWEP.BobScale = 0
 
 // Bob settings
 SWEP.Bob = {}
