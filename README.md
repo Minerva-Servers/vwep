@@ -17,7 +17,7 @@ Welcome to the Vanguard Weapon Base (VWEP) for Garry's Mod, the base is designed
 
 - **vwep_print_ammonames**: Prints all Ammo Types registered on the server, useful for SWEP.Primary.Ammo
 Example Output:
-```lua
+```
 [VWEP] Ammo - AR2
 [VWEP] Ammo - AR2AltFire
 [VWEP] Ammo - Pistol
