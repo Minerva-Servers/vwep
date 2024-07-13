@@ -190,8 +190,16 @@ function SWEP:SecondaryAttack()
     if ( !IsFirstTimePredicted() ) then return end
     if ( !self:CanIronSight() ) then return end
 
+    if ( self.PreSecondaryAttack ) then
+        self:PreSecondaryAttack()
+    end
+
     self:SetIronSights(!self:GetIronSights())
     self:SetNextSecondaryFire(CurTime() + self.IronSightsDelay)
+
+    if ( self.PostSecondaryAttack ) then
+        self:PostSecondaryAttack()
+    end
 end
 
 function SWEP:ShootBullet(damage, num_bullets, aimcone)
