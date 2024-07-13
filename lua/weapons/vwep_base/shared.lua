@@ -5,6 +5,7 @@ SWEP.PrintName = "Vanguard Weapon Base" // Weapon name in the HUD
 SWEP.Author = "Riggs" // Author
 SWEP.Instructions = "Left click to shoot, right click to zoom." // Instructions
 SWEP.Category = "Vanguard" // Category in the spawn menu
+SWEP.IsVWEP = true // Mark this as a Vanguard Weapon Base Weapon, useful for other scripts
 
 // Weapon settings
 SWEP.Slot = 1 // Slot in the weapon selection menu
