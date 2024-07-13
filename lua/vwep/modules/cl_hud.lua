@@ -39,7 +39,7 @@ hook.Add("HUDPaint", abbreviation .. ".HUDPaint", function()
 
     surface.SetFont(smallFont)
 
-    local y = 100
+    local y = 30
     for k, v in SortedPairs(weapon:GetTable()) do
         if ( isstring(v) and string.len(v) > 0 ) then
             w, h = surface.GetTextSize(k .. ": ")
