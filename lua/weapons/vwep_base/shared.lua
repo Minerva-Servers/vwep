@@ -129,8 +129,16 @@ function SWEP:SetupDataTables()
 end
 
 function SWEP:Initialize()
+    if ( self.PreInitialize ) then
+        self:PreInitialize()
+    end
+
     self:SetWeaponHoldType(self.HoldType) // Set the weapon hold type
     self:SetIronSights(false)
+
+    if ( self.PostInitialize ) then
+        self:PostInitialize()
+    end
 end
 
 function SWEP:CalculateNextPrimaryFire()
@@ -187,6 +195,10 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:ShootBullet(damage, num_bullets, aimcone)
+    if ( self.PreShootBullet ) then
+        self:PreShootBullet(damage, num_bullets, aimcone)
+    end
+
     local bullet = {}
     bullet.Num = num_bullets
     bullet.Src = self:GetOwner():GetShootPos()
@@ -200,15 +212,27 @@ function SWEP:ShootBullet(damage, num_bullets, aimcone)
 
     self:GetOwner():FireBullets(bullet)
     self:ShootEffects()
+
+    if ( self.PostShootBullet ) then
+        self:PostShootBullet(damage, num_bullets, aimcone, bullet)
+    end
 end
 
 function SWEP:ShootEffects()
+    if ( self.PreShootEffects ) then
+        self:PreShootEffects()
+    end
+
     local ply = self:GetOwner()
     if ( !IsValid(ply) ) then return end
 
     self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
     ply:MuzzleFlash()
     ply:SetAnimation(PLAYER_ATTACK1)
+
+    if ( self.PostShootEffects ) then
+        self:PostShootEffects()
+    end
 end
 
 function SWEP:CanPrimaryAttack()
@@ -248,6 +272,10 @@ function SWEP:Reload()
     local ply = self:GetOwner()
     if ( !IsValid(ply) ) then return end
 
+    if ( self.PreReload ) then
+        self:PreReload()
+    end
+
     self:SetIronSights(false)
     self:SetReloading(true)
 
@@ -266,9 +294,25 @@ function SWEP:Reload()
     timer.Simple(duration, function()
         if ( !IsValid(self) ) then return end
 
+        if ( self.PreReloadFinish ) then
+            self:PreReloadFinish()
+        end
+
         self:SetReloading(false)
-        self:SetClip1(self.Primary.ClipSize)
+
+        local ammo = self.Primary.ClipSize - self:Clip1()
+        local ammoToTake = math.min(ammo, ply:GetAmmoCount(self.Primary.Ammo))
+        ply:RemoveAmmo(ammoToTake, self.Primary.Ammo)
+        self:SetClip1(self:Clip1() + ammoToTake)
+
+        if ( self.PostReloadFinish ) then
+            self:PostReloadFinish()
+        end
     end)
+
+    if ( self.PostReload ) then
+        self:PostReload()
+    end
 end
 
 function SWEP:Think()
