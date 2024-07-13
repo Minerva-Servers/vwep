@@ -98,7 +98,7 @@ SWEP.WorldModelDynamicLights = {
 }
 
 SWEP.WorldModelMaterial = "" // Worldmodel material
-SWEP.WorldModelColor = Color(255, 0, 0, 255) // Worldmodel color
+SWEP.WorldModelColor = Color(255, 255, 255, 255) // Worldmodel color
 SWEP.WorldModelRenderMode = RENDERMODE_NORMAL // Worldmodel render mode
 SWEP.WorldModelRenderFX = kRenderFxNone // Worldmodel render fx
 
