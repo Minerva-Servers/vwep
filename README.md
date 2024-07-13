@@ -85,6 +85,7 @@ SWEP.Primary.SoundVolume = 1 -- Sound volume
 SWEP.Primary.SoundChannel = CHAN_WEAPON -- Sound channel
 
 -- Iron sights settings
+SWEP.IronSightsEnabled = true -- Enable iron sights
 SWEP.IronSightsPos = Vector(-6.035, 0, 3.029) -- Iron sights position
 SWEP.IronSightsAng = Vector(0.2, -1.3, 1) -- Iron sights angle
 SWEP.IronSightsFOV = 0.75 -- Iron sights field of view
