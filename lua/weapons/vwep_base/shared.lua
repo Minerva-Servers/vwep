@@ -188,6 +188,13 @@ function SWEP:CanReload()
 end
 
 function SWEP:GetViewModelReloadAnimation()
+    local reloadSequence = self.Reloading.Sequence
+    if ( isfunction(reloadSequence) ) then
+        reloadSequence = reloadSequence(self)
+    elseif ( istable(reloadSequence) ) then
+        reloadSequence = reloadSequence[math.random(#reloadSequence)]
+    end
+
     return self.Reloading.SequenceString or self.Reloading.Sequence or ACT_VM_RELOAD
 end
 
