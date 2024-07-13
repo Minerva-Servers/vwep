@@ -107,3 +107,11 @@ concommand.Add("vwep_print_ammonames", function()
         MsgC(vwep.info.color, "[VWEP] ", color_white, "Ammo - " .. v .. "\n")
     end
 end)
+
+if ( CLIENT ) then
+    concommand.Add("vwep_toggle_devmode", function(ply)
+        if ( !IsValid(ply) ) then return end
+
+        ply:SetNW2Bool("VWEP.DevMode", !ply:GetNW2Bool("VWEP.DevMode", false))
+    end)
+end

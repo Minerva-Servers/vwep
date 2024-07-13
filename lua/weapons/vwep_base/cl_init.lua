@@ -257,3 +257,28 @@ function SWEP:DrawWorldModel()
         end
     end
 end
+
+function SWEP:EnabledDevMode()
+    local ply = self:GetOwner()
+    if ( !IsValid(ply) ) then return false end
+
+    return ply:GetNW2Bool("VWEP.DevMode", false)
+end
+
+function SWEP:DrawHUD()
+    if ( self.PostDrawHUD ) then
+        self:PostDrawHUD()
+    end
+
+    if ( self:EnabledDevMode() ) then
+        draw.SimpleText("VWEP [ Dev Mode ]", "DermaLarge", 10, 10, vwep.info.color, TEXT_ALIGN_LEFT)
+        local pos, ang = self:GetViewModelPosition(EyePos(), EyeAngles())
+
+        draw.SimpleText("Pos: " .. tostring(pos), "DermaDefault", 10, 40, vwep.info.color, TEXT_ALIGN_LEFT)
+        draw.SimpleText("Ang: " .. tostring(ang), "DermaDefault", 10, 55, vwep.info.color, TEXT_ALIGN_LEFT)
+    end
+
+    if ( self.PastDrawHUD ) then
+        self:PastDrawHUD()
+    end
+end
