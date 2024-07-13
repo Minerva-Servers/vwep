@@ -21,8 +21,8 @@ function vwep.util:GetPlayers()
     return players
 end
 
-function vwep.util:Message( .. .)
-    local args = { .. .}
+function vwep.util:Message(...)
+    local args = { ... }
 
     MsgC(vwep.info.color, "[VWEP] ", Color(255, 255, 255), unpack(args), "\n")
 end
@@ -100,3 +100,10 @@ do
 end
 
 vwep.util:IncludeDir("vwep")
+
+concommand.Add("vwep_print_ammonames", function()
+    local ammoTable = game.GetAmmoTypes()
+    for k, v in ipairs(ammoTable) do
+        MsgC(vwep.info.color, "[VWEP] ", color_white, " Ammo - " .. v.name .. "\n")
+    end
+end)
