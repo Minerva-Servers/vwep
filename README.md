@@ -13,6 +13,10 @@ Welcome to the Vanguard Weapon Base (VWEP) for Garry's Mod, the base is designed
 1. **Download the VWEP base**: Place the `vwep` folder in your `addons` directory within Garry's Mod.
 2. **Create a new weapon**: Use the provided template below to create your own weapon file.
 
+## Additional Console Commands
+
+- **vwep_print_ammonames**: Prints all Ammo Types registered on the server, useful for SWEP.Primary.Ammo
+
 ## Example Weapon: USP Match Pistol
 
 Here’s an example of a weapon script using the Vanguard Weapon Base. Save this as `vwep_usp.lua` in your `lua/weapons/` directory, or if you are running this for a gamemode, put the weapon within the `*your gamemode*/entities/weapons/` directory.
@@ -65,7 +69,7 @@ SWEP.Primary.Delay = 0.5 -- Delay between shots
 SWEP.Primary.RPM = 400 -- Rounds per minute, this is used instead of delay if it's set
 
 -- Primary sound settings
-SWEP.Primary.Sound = Sound("Weapon_Pistol.Single") -- Primary fire 
+SWEP.Primary.Sound = Sound("Weapon_Pistol.Single") -- Primary fire
 SWEP.Primary.SoundEmpty = Sound("Weapon_Pistol.Empty") -- Primary fire when empty
 SWEP.Primary.SoundLevel = 100 -- Sound level, used for sound distance
 SWEP.Primary.SoundPitch = 100 -- Sound pitch
