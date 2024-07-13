@@ -91,8 +91,8 @@ SWEP.ViewModelRenderFX = kRenderFxNone // Viewmodel render fx
 // Worldmodel settings
 SWEP.WorldModel = "models/weapons/w_pistol.mdl" // The model used in third-person view
 SWEP.WorldModelBone = "ValveBiped.Bip01_R_Hand" // The bone to attach the worldmodel to, this is required!
-SWEP.WorldModelOffset = Vector(0, 10, 4) // Worldmodel offset
-SWEP.WorldModelOffsetAng = Angle(0, 0, 180) // Worldmodel angle offset
+SWEP.WorldModelOffset = Vector(1.5, -5, 3.5) // Worldmodel offset
+SWEP.WorldModelOffsetAng = Angle(0, 180, 180) // Worldmodel angle offset
 SWEP.WorldModelScale = 1 // Worldmodel scale
 SWEP.WorldModelDynamicLights = {
     --{Pos = Vector(0, 0, 0), Brightness = 1, Size = 128, Decay = 100, R = 255, G = 255, B = 255, DieTime = 0.1} // Example
