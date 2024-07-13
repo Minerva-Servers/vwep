@@ -83,7 +83,7 @@ SWEP.ViewModelDynamicLights = {
 }
 
 SWEP.ViewModelMaterial = "" // Viewmodel material
-SWEP.ViewModelColor = color_white // Viewmodel color
+SWEP.ViewModelColor = Color(255, 255, 255, 255) // Viewmodel color
 SWEP.ViewModelRenderMode = RENDERMODE_NORMAL // Viewmodel render mode
 SWEP.ViewModelRenderFX = kRenderFxNone // Viewmodel render fx
 
