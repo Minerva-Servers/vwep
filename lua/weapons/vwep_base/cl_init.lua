@@ -270,14 +270,6 @@ function SWEP:DrawHUD()
         self:PostDrawHUD()
     end
 
-    if ( self:EnabledDevMode() ) then
-        draw.SimpleText("VWEP [ Dev Mode ]", "DermaLarge", 10, 10, vwep.info.color)
-        local pos, ang = self:GetViewModelPosition(EyePos(), EyeAngles())
-
-        draw.SimpleText("[ Pos ] : " .. tostring(pos), "DermaDefault", 10, 40, color_white)
-        draw.SimpleText("[ Ang ] : " .. tostring(ang), "DermaDefault", 10, 55, color_white)
-    end
-
     if ( self.PastDrawHUD ) then
         self:PastDrawHUD()
     end
