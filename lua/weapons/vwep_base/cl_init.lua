@@ -195,13 +195,16 @@ function SWEP:DrawViewModel()
             local light = DynamicLight(vm:EntIndex() + k)
             if ( !light ) then continue end
 
+            local col = v.Color
+            col.a = col.a or 255
+
             light.Pos = vm:GetPos() + vm:GetAngles():Forward() * v.Pos.x + vm:GetAngles():Right() * v.Pos.y + vm:GetAngles():Up() * v.Pos.z
             light.Brightness = v.Brightness or 1
             light.Size = v.Size or 128
             light.Decay = v.Decay or 100
-            light.R = v.R
-            light.G = v.G
-            light.B = v.B
+            light.R = col.R
+            light.G = col.G
+            light.B = col.B
             light.DieTime = CurTime() + ( v.DieTime or 0.1 )
         end
     end

@@ -97,7 +97,7 @@ SWEP.WorldModelOffset = Vector(0, 0, 0) // Worldmodel offset
 SWEP.WorldModelOffsetAng = Angle(0, 0, 0) // Worldmodel angle offset
 SWEP.WorldModelScale = 1 // Worldmodel scale
 SWEP.WorldModelDynamicLights = {
-    {Pos = Vector(0, 0, 0), Brightness = 1, Size = 1, Decay = 100, R = 255, G = 255, B = 255} // Example
+    {Pos = Vector(0, 0, 0), Brightness = 1, Size = 1, Decay = 100, Color = Color(255, 255, 255)} // Example
 }
 
 SWEP.WorldModelMaterial = "" // Worldmodel material
@@ -336,7 +336,7 @@ function SWEP:ThinkIronSights()
         self:SetIronSights(false)
         return
     end
-    
+
     if ( IsFirstTimePredicted() ) then
         if ( self:GetIronSights() and !ply:KeyDown(IN_ATTACK2) ) then
             self:SetIronSights(false)
