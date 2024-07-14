@@ -45,7 +45,7 @@ SWEP.Primary.Delay = 0.5 // Delay between shots
 SWEP.Primary.RPM = 400 // Rounds per minute, this is used instead of delay if it's set
 
 // Primary sound settings
-SWEP.Primary.Sound = Sound("Weapon_Pistol.Single") // Primary fire 
+SWEP.Primary.Sound = Sound("Weapon_Pistol.Single") // Primary fire
 SWEP.Primary.SoundEmpty = Sound("Weapon_Pistol.Empty") // Primary fire when empty
 SWEP.Primary.SoundLevel = 100 // Sound level, used for sound distance
 SWEP.Primary.SoundPitch = 100 // Sound pitch
