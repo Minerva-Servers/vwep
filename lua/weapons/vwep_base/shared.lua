@@ -82,7 +82,7 @@ SWEP.ViewModelOffset = Vector(0, 0, 0) // Viewmodel offset
 SWEP.ViewModelOffsetAng = Angle(0, 0, 0) // Viewmodel angle offset
 SWEP.ViewModelScale = 1 // Viewmodel scale
 SWEP.ViewModelDynamicLights = {
-    {Pos = Vector(0, 0, 0), Brightness = 1, Size = 1, Decay = 100, R = 255, G = 255, B = 255} // Example
+    {Pos = Vector(0, 0, 0), Brightness = 1, Size = 1, Decay = 100, Color = Color(255, 255, 255, 255)} // Example
 }
 
 SWEP.ViewModelMaterial = "" // Viewmodel material
