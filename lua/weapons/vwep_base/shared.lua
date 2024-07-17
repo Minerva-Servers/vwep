@@ -112,6 +112,7 @@ SWEP.Recoil.Punch = Angle(1, 0, 0) // Punch angle
 function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 0, "IronSights")
     self:NetworkVar("Bool", 1, "Reloading")
+    self:NetworkVar("Int", 0, "NextIdle")
 end
 
 function SWEP:Initialize()
@@ -125,6 +126,28 @@ function SWEP:Initialize()
     if ( self.PostInitialize ) then
         self:PostInitialize()
     end
+end
+
+function SWEP:PlayAnimation(anim, rate)
+    local vm = self:GetOwner():GetViewModel()
+    if ( !IsValid(vm) ) then return end
+
+    local sequence = isstring(anim) and vm:LookupSequence(anim) or anim
+    if ( sequence == -1 ) then return end
+
+    vm:SendViewModelMatchingSequence(sequence)
+    vm:SetPlaybackRate(rate or 1)
+
+    return sequence, vm:SequenceDuration(sequence) / vm:GetPlaybackRate()
+end
+
+function SWEP:QueueIdle(duration)
+    local vm = self:GetOwner():GetViewModel()
+    if ( !IsValid(vm) ) then return end
+
+    duration = duration or vm:SequenceDuration() / vm:GetPlaybackRate()
+    
+    self:SetNextIdle(CurTime() + duration + 0.1)
 end
 
 function SWEP:CalculateNextPrimaryFire()
@@ -228,6 +251,8 @@ function SWEP:ShootEffects()
     if ( !IsValid(ply) ) then return end
 
     self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
+    self:QueueIdle()
+
     ply:MuzzleFlash()
     ply:SetAnimation(PLAYER_ATTACK1)
 
@@ -284,9 +309,8 @@ function SWEP:Reload()
 
     local vmReload = self:GetViewModelReloadAnimation()
     local vm = ply:GetViewModel()
-    vm:SendViewModelMatchingSequence(isstring(vmReload) and vm:LookupSequence(vmReload) or vmReload)
-
-    local duration = vm:SequenceDuration() / vm:GetPlaybackRate()
+    local _, duration = self:PlayAnimation(vmReload, self.Reloading.PlaybackRate)
+    
     self:SetNextPrimaryFire(CurTime() + duration)
 
     local reloadSound, reloadSoundLevel, reloadSoundPitch, reloadSoundVolume, reloadSoundChannel = self.Reloading.Sound, self.Reloading.SoundLevel, self.Reloading.SoundPitch, self.Reloading.SoundVolume, self.Reloading.SoundChannel
@@ -305,6 +329,7 @@ function SWEP:Reload()
         local ammoToTake = math.min(ammo, ply:GetAmmoCount(self.Primary.Ammo))
         ply:RemoveAmmo(ammoToTake, self.Primary.Ammo)
         self:SetClip1(self:Clip1() + ammoToTake)
+        self:QueueIdle()
 
         if ( self.PostReloadFinish ) then
             self:PostReloadFinish()
@@ -332,9 +357,58 @@ function SWEP:ThinkIronSights()
     end
 end
 
+function SWEP:ThinkIdle()
+    if ( !self:GetNextIdle() ) then
+        self:SetNextIdle(0)
+    end
+
+    if ( self:GetNextIdle() == 0 ) then return end
+
+    if ( self:GetNextIdle() > CurTime() ) then
+        self:SetNextIdle(0)
+        self:SendWeaponAnim(self:Clip1() > 0 and ( self.IdleAnim or ACT_VM_IDLE ) or ( self.EmptyAnim or ACT_VM_IDLE_EMPTY ))
+    end
+end
+
 function SWEP:Think()
     local ply = self:GetOwner()
     if ( !IsValid(ply) ) then return end
 
     self:ThinkIronSights()
+    self:ThinkIdle()
+end
+
+function SWEP:Deploy()
+    if ( self.PreDeploy ) then
+        self:PreDeploy()
+    end
+
+    self:SetIronSights(false)
+    self:SetReloading(false)
+    self:SetNextIdle(0)
+
+    self:SendWeaponAnim(ACT_VM_DRAW)
+    self:QueueIdle()
+
+    if ( self.PostDeploy ) then
+        self:PostDeploy()
+    end
+
+    return true
+end
+
+function SWEP:Holster()
+    if ( self.PreHolster ) then
+        self:PreHolster()
+    end
+
+    self:SetIronSights(false)
+    self:SetReloading(false)
+    self:SetNextIdle(0)
+
+    if ( self.PostHolster ) then
+        self:PostHolster()
+    end
+
+    return true
 end
