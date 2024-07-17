@@ -347,8 +347,4 @@ function SWEP:Think()
     if ( !IsValid(ply) ) then return end
 
     self:ThinkIronSights()
-
-    if ( CLIENT ) then
-        self:ThinkSway()
-    end
 end
