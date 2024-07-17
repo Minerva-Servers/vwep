@@ -109,16 +109,6 @@ SWEP.WorldModelRenderFX = kRenderFxNone // Worldmodel render fx
 SWEP.Recoil = {}
 SWEP.Recoil.Punch = Angle(1, 0, 0) // Punch angle
 
-// Bob settings
-SWEP.Bob = {}
-SWEP.Bob.Scale = 1
-SWEP.Bob.Speed = 1
-
-// Sway settings
-SWEP.Sway = {}
-SWEP.Sway.Scale = 1
-SWEP.Sway.Speed = 1
-
 function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 0, "IronSights")
     self:NetworkVar("Bool", 1, "Reloading")
