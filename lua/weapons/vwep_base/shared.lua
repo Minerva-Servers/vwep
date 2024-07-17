@@ -109,10 +109,6 @@ SWEP.WorldModelRenderFX = kRenderFxNone // Worldmodel render fx
 SWEP.Recoil = {}
 SWEP.Recoil.Punch = Angle(1, 0, 0) // Punch angle
 
-// Disable the default gmod weapon sway and bob
-SWEP.SwayScale = 0
-SWEP.BobScale = 0
-
 // Bob settings
 SWEP.Bob = {}
 SWEP.Bob.Scale = 1
@@ -126,7 +122,6 @@ SWEP.Sway.Speed = 1
 function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 0, "IronSights")
     self:NetworkVar("Bool", 1, "Reloading")
-    self:NetworkVar("Bool", 2, "Lowered")
 end
 
 function SWEP:Initialize()
@@ -151,7 +146,6 @@ function SWEP:CalculateNextPrimaryFire()
 end
 
 function SWEP:PrimaryAttack()
-    if ( !IsFirstTimePredicted() ) then return end
     if ( !self:CanPrimaryAttack() ) then return end
 
     if ( self.PrePrimaryAttack ) then
@@ -164,8 +158,10 @@ function SWEP:PrimaryAttack()
     self:TakePrimaryAmmo(1)
 
     local ply = self:GetOwner()
-    ply:SetEyeAngles(ply:EyeAngles() + Angle(-self.Primary.Recoil, 0, 0))
-    ply:ViewPunch(self.Recoil.Punch or Angle(-self.Primary.Recoil, 0, 0))
+    if ( IsValid(ply) and CLIENT and IsFirstTimePredicted() ) then
+        ply:SetEyeAngles(ply:EyeAngles() + Angle(-self.Primary.Recoil, 0, 0))
+        ply:ViewPunch(self.Recoil.Punch or Angle(-self.Primary.Recoil, 0, 0))
+    end
 
     self:SetNextPrimaryFire(self:CalculateNextPrimaryFire())
 
