@@ -12,10 +12,10 @@ function vwep.sounds:Register(name, path, pitch, volume)
 
     sound.Add({
         name = name,
-        channel = 1000,
+        channel = CHAN_STATIC,
         volume = data.volume,
         level = 100,
-        pitch = data.pitch,
+        pitch = istable(data.pitch) and math.random(data.pitch[1], data.pitch[2]) or data.pitch,
         sound = data.path
     })
 

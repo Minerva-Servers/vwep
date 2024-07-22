@@ -98,7 +98,7 @@ SWEP.IronSightsToggle = false -- Is the iron sight a toggle mechanism, mark as f
 -- Reloading settings
 SWEP.Reloading = {}
 SWEP.Reloading.Sequence = ACT_VM_RELOAD -- The reload animation
-SWEP.Reloading.SequenceString = "reload" -- The reload animation as a string, this will be prioritized over the sequence
+SWEP.Reloading.SequenceIronSights = ACT_VM_RELOAD -- The reload animation when iron sighting
 SWEP.Reloading.PlaybackRate = 1 -- The playback rate of the reload animation
 SWEP.Reloading.Sound = Sound("Weapon_Pistol.Reload") -- The reload sound
 SWEP.Reloading.SoundLevel = 60 -- The reload sound level, used for sound distance
@@ -139,7 +139,7 @@ SWEP.WorldModelRenderFX = kRenderFxNone -- Worldmodel render fx
 
 -- Recoil settings
 SWEP.Recoil = {}
-SWEP.Recoil.Punch = Angle(1, 0, 0) -- Punch angle
+SWEP.Recoil.Punch = nil -- Punch angle
 ```
 
 ## Documentation

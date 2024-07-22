@@ -42,6 +42,9 @@ SWEP.Primary.NumShots = 1 // Number of shots per trigger pull
 SWEP.Primary.Cone = 0.02 // Bullet spread
 SWEP.Primary.Delay = 0.5 // Delay between shots
 SWEP.Primary.RPM = 400 // Rounds per minute, this is used instead of delay if it's set
+SWEP.Primary.Sequence = ACT_VM_PRIMARYATTACK // The shoot animation
+SWEP.Primary.SequenceIronSights = ACT_VM_PRIMARYATTACK // The shoot animation when iron sighting
+SWEP.Primary.PlaybackRate = 1 // The playback rate of the shoot animation
 
 // Primary sound settings
 SWEP.Primary.Sound = Sound("Weapon_Pistol.Single") // Primary fire
@@ -66,7 +69,7 @@ SWEP.IronSightsToggle = false // Is the iron sight a toggle mechanism, mark as f
 // Reloading settings
 SWEP.Reloading = {}
 SWEP.Reloading.Sequence = ACT_VM_RELOAD // The reload animation
-SWEP.Reloading.SequenceString = "reload" // The reload animation as a string, this will be prioritized over the sequence
+SWEP.Reloading.SequenceIronSights = ACT_VM_RELOAD // The reload animation when iron sighting
 SWEP.Reloading.PlaybackRate = 1 // The playback rate of the reload animation
 SWEP.Reloading.Sound = Sound("Weapon_Pistol.Reload") // The reload sound
 SWEP.Reloading.SoundLevel = 60 // The reload sound level, used for sound distance
@@ -107,12 +110,12 @@ SWEP.WorldModelRenderFX = kRenderFxNone // Worldmodel render fx
 
 // Recoil settings
 SWEP.Recoil = {}
-SWEP.Recoil.Punch = Angle(1, 0, 0) // Punch angle
+SWEP.Recoil.Punch = nil // Punch angle
 
 function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 0, "IronSights")
     self:NetworkVar("Bool", 1, "Reloading")
-    self:NetworkVar("Int", 0, "NextIdle")
+    self:NetworkVar("Float", 0, "NextIdle")
 end
 
 function SWEP:Initialize()
@@ -120,7 +123,7 @@ function SWEP:Initialize()
         self:PreInitialize()
     end
 
-    self:SetWeaponHoldType(self.HoldType) // Set the weapon hold type
+    self:SetWeaponHoldType(self.HoldType)
     self:SetIronSights(false)
 
     if ( self.PostInitialize ) then
@@ -146,8 +149,10 @@ function SWEP:QueueIdle(duration)
     if ( !IsValid(vm) ) then return end
 
     duration = duration or vm:SequenceDuration() / vm:GetPlaybackRate()
+    duration = math.Round(duration, 2)
+    duration = duration + 0.1
     
-    self:SetNextIdle(CurTime() + duration + 0.1)
+    self:SetNextIdle(CurTime() + duration)
 end
 
 function SWEP:CalculateNextPrimaryFire()
@@ -172,7 +177,7 @@ function SWEP:PrimaryAttack()
 
     local ply = self:GetOwner()
     if ( IsValid(ply) and CLIENT and IsFirstTimePredicted() ) then
-        ply:SetEyeAngles(ply:EyeAngles() + Angle(-self.Primary.Recoil, 0, 0))
+        ply:SetEyeAngles(ply:EyeAngles() + ( self.Recoil.Punch or Angle(-self.Primary.Recoil, 0, 0) ))
         ply:ViewPunch(self.Recoil.Punch or Angle(-self.Primary.Recoil, 0, 0))
     end
 
@@ -242,6 +247,22 @@ function SWEP:ShootBullet(damage, num_bullets, aimcone)
     end
 end
 
+function SWEP:GetViewModelShootAnimation()
+    local shootSequence = self.Primary.Sequence or ACT_VM_PRIMARYATTACK
+
+    if ( self:GetIronSights() ) then
+        shootSequence = self.Primary.SequenceIronSights or shootSequence
+    end
+
+    if ( isfunction(shootSequence) ) then
+        shootSequence = shootSequence(self)
+    elseif ( istable(shootSequence) ) then
+        shootSequence = shootSequence[math.random(#shootSequence)]
+    end
+
+    return shootSequence
+end
+
 function SWEP:ShootEffects()
     if ( self.PreShootEffects ) then
         self:PreShootEffects()
@@ -250,7 +271,7 @@ function SWEP:ShootEffects()
     local ply = self:GetOwner()
     if ( !IsValid(ply) ) then return end
 
-    self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
+    self:PlayAnimation(self:GetViewModelShootAnimation(), self.Primary.PlaybackRate)
     self:QueueIdle()
 
     ply:MuzzleFlash()
@@ -280,15 +301,20 @@ function SWEP:CanReload()
     return self:Clip1() < self.Primary.ClipSize and self:GetOwner():GetAmmoCount(self.Primary.Ammo) > 0
 end
 
-function SWEP:GetViewModelReloadAnimation()
-    local reloadSequence = self.Reloading.Sequence
+function SWEP:GetViewModelReloadAnimation(bIronsighted)
+    local reloadSequence = self.Reloading.Sequence or ACT_VM_RELOAD
+
+    if ( bIronsighted ) then
+        reloadSequence = self.Reloading.SequenceIronSights or reloadSequence
+    end
+
     if ( isfunction(reloadSequence) ) then
         reloadSequence = reloadSequence(self)
     elseif ( istable(reloadSequence) ) then
         reloadSequence = reloadSequence[math.random(#reloadSequence)]
     end
 
-    return self.Reloading.SequenceString or self.Reloading.Sequence or ACT_VM_RELOAD
+    return reloadSequence
 end
 
 function SWEP:Reload()
@@ -302,14 +328,16 @@ function SWEP:Reload()
         self:PreReload()
     end
 
+    local bIronsighted = self:GetIronSights()
     self:SetIronSights(false)
     self:SetReloading(true)
 
     ply:SetAnimation(PLAYER_RELOAD)
 
-    local vmReload = self:GetViewModelReloadAnimation()
+    local vmReload = self:GetViewModelReloadAnimation(bIronsighted)
     local vm = ply:GetViewModel()
     local _, duration = self:PlayAnimation(vmReload, self.Reloading.PlaybackRate)
+    self:QueueIdle()
     
     self:SetNextPrimaryFire(CurTime() + duration)
 
@@ -329,7 +357,6 @@ function SWEP:Reload()
         local ammoToTake = math.min(ammo, ply:GetAmmoCount(self.Primary.Ammo))
         ply:RemoveAmmo(ammoToTake, self.Primary.Ammo)
         self:SetClip1(self:Clip1() + ammoToTake)
-        self:QueueIdle()
 
         if ( self.PostReloadFinish ) then
             self:PostReloadFinish()
@@ -362,11 +389,11 @@ function SWEP:ThinkIdle()
         self:SetNextIdle(0)
     end
 
-    if ( self:GetNextIdle() == 0 ) then return end
+    if ( self:GetNextIdle() <= 0 ) then return end
 
-    if ( self:GetNextIdle() > CurTime() ) then
+    if ( CurTime() > self:GetNextIdle() ) then
         self:SetNextIdle(0)
-        self:SendWeaponAnim(self:Clip1() > 0 and ( self.IdleAnim or ACT_VM_IDLE ) or ( self.EmptyAnim or ACT_VM_IDLE_EMPTY ))
+        self:PlayAnimation(self:Clip1() > 0 and ( self.IdleAnim or ACT_VM_IDLE ) or ( self.EmptyAnim or ACT_VM_IDLE_EMPTY ))
     end
 end
 
@@ -387,7 +414,7 @@ function SWEP:Deploy()
     self:SetReloading(false)
     self:SetNextIdle(0)
 
-    self:SendWeaponAnim(ACT_VM_DRAW)
+    self:PlayAnimation(self.DeployAnim or ACT_VM_DRAW)
     self:QueueIdle()
 
     if ( self.PostDeploy ) then
