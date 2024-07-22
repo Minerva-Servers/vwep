@@ -79,6 +79,8 @@ SWEP.Reloading.SoundChannel = CHAN_WEAPON // The reload sound channel
 
 // Viewmodel settings
 SWEP.ViewModel = "models/weapons/c_pistol.mdl" // The model used in first-person view
+SWEP.ViewModelSkin = 0 // Viewmodel skin
+SWEP.ViewModelBodygroups = {} // Viewmodel bodygroups
 SWEP.ViewModelFOV = 62 // Viewmodel field of view
 SWEP.ViewModelFlip = false // Flip the viewmodel
 SWEP.ViewModelOffset = Vector(0, 0, 0) // Viewmodel offset
@@ -95,6 +97,8 @@ SWEP.ViewModelRenderFX = kRenderFxNone // Viewmodel render fx
 
 // Worldmodel settings
 SWEP.WorldModel = "models/weapons/w_pistol.mdl" // The model used in third-person view
+SWEP.WorldModelSkin = 0 // Worldmodel skin
+SWEP.WorldModelBodygroups = {} // Worldmodel bodygroups
 SWEP.WorldModelBone = "ValveBiped.Bip01_R_Hand" // The bone to attach the worldmodel to
 SWEP.WorldModelOffset = Vector(0, 0, 0) // Worldmodel offset
 SWEP.WorldModelOffsetAng = Angle(0, 0, 0) // Worldmodel angle offset

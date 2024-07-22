@@ -97,6 +97,16 @@ function SWEP:DrawViewModel()
 
     vm:DrawModel()
 
+    if ( self.ViewModelSkin != vm:GetSkin() ) then
+        vm:SetSkin(self.ViewModelSkin)
+    end
+
+    for k, v in ipairs(self.ViewModelBodygroups or {}) do
+        if ( vm:GetBodygroup(k) != v ) then
+            vm:SetBodygroup(k, v)
+        end
+    end
+
     if ( self.ViewModelDynamicLights and #self.ViewModelDynamicLights > 0 ) then
         for k, v in ipairs(self.ViewModelDynamicLights) do
             if ( !v.Pos ) then continue end
@@ -148,6 +158,16 @@ function SWEP:DrawWorldModel()
     WorldModel:SetModelScale(self.WorldModelScale or 1, 0)
 
     WorldModel:DrawModel()
+
+    if ( self.WorldModelSkin != WorldModel:GetSkin() ) then
+        WorldModel:SetSkin(self.WorldModelSkin)
+    end
+
+    for k, v in ipairs(self.WorldModelBodygroups or {}) do
+        if ( WorldModel:GetBodygroup(k) != v ) then
+            WorldModel:SetBodygroup(k, v)
+        end
+    end
 
     self.WorldModelEntity = WorldModel
 
