@@ -1,20 +1,21 @@
 vwep.sounds = vwep.sounds or {}
 vwep.sounds.stored = vwep.sounds.stored or {}
 
-function vwep.sounds:Register(name, path, pitch, volume)
+function vwep.sounds:Register(name, path, pitch, volume, level)
     if ( !name or !path ) then return end
 
     local data = {
         path = path,
         pitch = pitch or 100,
-        volume = volume or 1
+        volume = volume or 1,
+        level = level or 100
     }
 
     sound.Add({
         name = name,
         channel = CHAN_STATIC,
         volume = data.volume,
-        level = 100,
+        level = data.level,
         pitch = istable(data.pitch) and math.random(data.pitch[1], data.pitch[2]) or data.pitch,
         sound = data.path
     })

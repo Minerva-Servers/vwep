@@ -83,19 +83,15 @@ function SWEP:AdjustMouseSensitivity()
     end
 end
 
-function SWEP:DrawViewModel()
-    local ply = self:GetOwner()
-    if ( !IsValid(ply) ) then return end
-
-    local vm = ply:GetViewModel()
+function SWEP:PreDrawViewModel(vm, weapon, ply)
     if ( !IsValid(vm) ) then return end
+    if ( !IsValid(weapon) ) then return end
+    if ( !IsValid(ply) ) then return end
 
     vm:SetMaterial(self.ViewModelMaterial or "")
     vm:SetColor(self.ViewModelColor or Color(255, 255, 255, 255))
     vm:SetRenderMode(self.ViewModelRenderMode or RENDERMODE_NORMAL)
     vm:SetRenderFX(self.ViewModelRenderFX or kRenderFxNone)
-
-    vm:DrawModel()
 
     if ( self.ViewModelSkin != vm:GetSkin() ) then
         vm:SetSkin(self.ViewModelSkin)
