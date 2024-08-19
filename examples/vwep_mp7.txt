@@ -33,11 +33,13 @@ SWEP.Primary.Ammo = "SMG1"
 SWEP.Primary.Recoil = 0.4
 SWEP.Primary.Damage = 10
 SWEP.Primary.NumShots = 1
-SWEP.Primary.Cone = 0.06
+SWEP.Primary.Cone = 0.03
 SWEP.Primary.Delay = 0.5
+SWEP.Primary.Sequence = "fire04"
+SWEP.Primary.SequenceIronSights = "fire01"
 SWEP.Primary.RPM = 800
 
-SWEP.Primary.Sound = Sound("Weapon_SMG1.Single")
+SWEP.Primary.Sound = Sound("VWEP.MP7.Single")
 SWEP.Primary.SoundEmpty = Sound("Weapon_SMG1.Empty")
 SWEP.Primary.SoundLevel = 100
 SWEP.Primary.SoundPitch = 100
@@ -56,8 +58,8 @@ SWEP.IronSightsRunSpeed = 0.75
 SWEP.IronSightsToggle = false
 
 SWEP.Reloading = {}
-SWEP.Reloading.Sequence = ACT_VM_RELOAD
-SWEP.Reloading.SequenceIronSights = ACT_VM_RELOAD
+SWEP.Reloading.Sequence = "reload"
+SWEP.Reloading.SequenceIronSights = "reload"
 SWEP.Reloading.PlaybackRate = 1
 SWEP.Reloading.Sound = Sound("Weapon_SMG1.Reload")
 SWEP.Reloading.SoundLevel = 60
@@ -96,3 +98,5 @@ SWEP.WorldModelRenderFX = kRenderFxNone
 
 SWEP.Recoil = {}
 SWEP.Recoil.Punch = nil
+
+vwep.sounds:Register("VWEP.MP7.Single", "^weapons/smg1/npc_smg1_fire1.wav", {95, 105}, 1, 100)

@@ -35,9 +35,11 @@ SWEP.Primary.Damage = 10
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Cone = 0.02
 SWEP.Primary.Delay = 0.5
+SWEP.Primary.Sequence = "fire3"
+SWEP.Primary.SequenceIronSights = "fire"
 SWEP.Primary.RPM = 400
 
-SWEP.Primary.Sound = Sound("Weapon_Pistol.Single")
+SWEP.Primary.Sound = Sound("VWEP.USP.Single")
 SWEP.Primary.SoundEmpty = Sound("Weapon_Pistol.Empty")
 SWEP.Primary.SoundLevel = 100
 SWEP.Primary.SoundPitch = 100
@@ -56,8 +58,8 @@ SWEP.IronSightsRunSpeed = 0.75
 SWEP.IronSightsToggle = false
 
 SWEP.Reloading = {}
-SWEP.Reloading.Sequence = ACT_VM_RELOAD
-SWEP.Reloading.SequenceIronSights = ACT_VM_RELOAD
+SWEP.Reloading.Sequence = "reload"
+SWEP.Reloading.SequenceIronSights = "reload"
 SWEP.Reloading.PlaybackRate = 1
 SWEP.Reloading.Sound = Sound("Weapon_Pistol.Reload")
 SWEP.Reloading.SoundLevel = 60
@@ -96,3 +98,5 @@ SWEP.WorldModelRenderFX = kRenderFxNone
 
 SWEP.Recoil = {}
 SWEP.Recoil.Punch = nil
+
+vwep.sounds:Register("VWEP.USP.Single", "^weapons/pistol/pistol_fire3.wav", {98, 102}, 1, 100)
