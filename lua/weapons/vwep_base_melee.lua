@@ -53,7 +53,7 @@ SWEP.Primary.Sound = Sound("Weapon_Pistol.Single") // Primary fire
 SWEP.Primary.SoundLevel = 70 // Sound level, used for sound distance
 SWEP.Primary.SoundPitch = 100 // Sound pitch
 SWEP.Primary.SoundVolume = 1 // Sound volume
-SWEP.Primary.SoundChannel = CHAN_WEAPON // Sound channel
+SWEP.Primary.SoundChannel = CHAN_AUTO // Sound channel
 
 // Primary sound hit settings
 SWEP.Primary.SoundHit = Sound("Flesh.Melee_Hit") // Sound when hitting flesh
@@ -61,7 +61,7 @@ SWEP.Primary.SoundHitWorld = Sound("Weapon_Crowbar.Melee_HitWorld") // Sound whe
 SWEP.Primary.SoundHitLevel = 70 // Sound level, used for sound distance
 SWEP.Primary.SoundHitPitch = 100 // Sound pitch
 SWEP.Primary.SoundHitVolume = 1 // Sound volume
-SWEP.Primary.SoundHitChannel = CHAN_WEAPON // Sound channel
+SWEP.Primary.SoundHitChannel = CHAN_AUTO // Sound channel
 
 // Viewmodel settings
 SWEP.ViewModel = "models/weapons/c_pistol.mdl" // The model used in first-person view
@@ -226,17 +226,28 @@ function SWEP:ClubEffects()
             end
 
             if ( SERVER ) then
-                local bullet = {}
-                bullet.Num = 1
-                bullet.Src = ply:GetShootPos()
-                bullet.Dir = ply:GetAimVector()
-                bullet.Spread = Vector(0, 0, 0)
-                bullet.Tracer = 0
-                bullet.Force = 1
-                bullet.Damage = 0
-                bullet.Attacker = ply
-                
-                ply:FireBullets(bullet)
+                local trace = {}
+                trace.start = ply:GetShootPos()
+                trace.endpos = trace.start + ply:GetAimVector() * 8192
+                trace.filter = ply
+                trace.mask = MASK_SHOT
+                trace = util.TraceLine(trace)
+
+                if ( trace.HitPos:Distance(trace.StartPos) < self.Primary.Range ) then
+                    local bullet = {}
+                    bullet.Num = 1
+                    bullet.Src = ply:GetShootPos()
+                    bullet.Dir = ply:GetAimVector()
+                    bullet.Spread = Vector(0, 0, 0)
+                    bullet.Tracer = 0
+                    bullet.Force = 1
+                    bullet.Damage = 0
+                    bullet.Attacker = ply
+                    
+                    ply:FireBullets(bullet)
+                end
+
+                debugoverlay.Line(trace.StartPos, trace.HitPos, 5, Color(255, 0, 0), true)
             end
         end
     end)
