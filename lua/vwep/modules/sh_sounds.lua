@@ -16,7 +16,7 @@ function vwep.sounds:Register(name, path, pitch, volume, level)
         channel = CHAN_STATIC,
         volume = data.volume,
         level = data.level,
-        pitch = istable(data.pitch) and math.random(data.pitch[1], data.pitch[2]) or data.pitch,
+        pitch = data.pitch,
         sound = data.path
     })
 
