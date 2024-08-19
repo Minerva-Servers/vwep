@@ -1,0 +1,87 @@
+AddCSLuaFile()
+
+SWEP.Base = "vwep_base_melee"
+
+SWEP.PrintName = "Crowbar"
+SWEP.Author = "Riggs"
+SWEP.Instructions = "Left click to shoot, right click to zoom."
+SWEP.Category = "Vanguard"
+
+SWEP.Slot = 1
+SWEP.SlotPos = 1
+SWEP.DrawAmmo = true
+SWEP.DrawCrosshair = true
+SWEP.DrawWeaponInfoBox = false
+
+SWEP.Spawnable = true
+SWEP.AdminOnly = false
+
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = false
+SWEP.Secondary.Ammo = "none"
+
+SWEP.HoldType = "melee"
+SWEP.UseHands = true
+SWEP.Sensitivity = 1
+
+SWEP.Primary.Automatic = false
+
+SWEP.Primary.Recoil = 1
+SWEP.Primary.Damage = 15
+SWEP.Primary.Delay = 0.2
+SWEP.Primary.NextSwing = 0.4
+SWEP.Primary.Sequence = {"misscenter1", "misscenter2"}
+SWEP.Primary.SequenceHit = {"hitcenter1", "hitcenter2", "hitcenter3"}
+SWEP.Primary.PlaybackRate = 1
+SWEP.Primary.Range = 64
+SWEP.Primary.HullSize = 1
+
+SWEP.Primary.Sound = Sound("Weapon_Crowbar.Single")
+SWEP.Primary.SoundLevel = 70
+SWEP.Primary.SoundPitch = 100
+SWEP.Primary.SoundVolume = 1
+SWEP.Primary.SoundChannel = CHAN_WEAPON
+
+SWEP.Primary.SoundHit = Sound("Flesh.Melee_Hit")
+SWEP.Primary.SoundHitWorld = Sound("Weapon_Crowbar.Melee_HitWorld")
+SWEP.Primary.SoundHitLevel = 70
+SWEP.Primary.SoundHitPitch = 100
+SWEP.Primary.SoundHitVolume = 1
+SWEP.Primary.SoundHitChannel = CHAN_WEAPON
+
+SWEP.ViewModel = "models/weapons/c_crowbar.mdl"
+SWEP.ViewModelSkin = 0
+SWEP.ViewModelBodygroups = {}
+SWEP.ViewModelFOV = 62
+SWEP.ViewModelFlip = false
+SWEP.ViewModelOffset = Vector(0, 0, 0)
+SWEP.ViewModelOffsetAng = Angle(0, 0, 0)
+SWEP.ViewModelScale = 1
+SWEP.ViewModelDynamicLights = {
+    {Pos = Vector(0, 0, 0), Brightness = 1, Size = 1, Decay = 100, Color = Color(255, 255, 255, 255)}
+}
+
+SWEP.ViewModelMaterial = ""
+SWEP.ViewModelColor = Color(255, 255, 255, 255)
+SWEP.ViewModelRenderMode = RENDERMODE_NORMAL
+SWEP.ViewModelRenderFX = kRenderFxNone
+
+SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
+SWEP.WorldModelSkin = 0
+SWEP.WorldModelBodygroups = {}
+SWEP.WorldModelBone = "ValveBiped.Bip01_R_Hand"
+SWEP.WorldModelOffset = Vector(1, 0, 3)
+SWEP.WorldModelOffsetAng = Angle(100, 10, 140)
+SWEP.WorldModelScale = 1
+SWEP.WorldModelDynamicLights = {
+    {Pos = Vector(0, 0, 0), Brightness = 1, Size = 1, Decay = 100, Color = Color(255, 255, 255)}
+}
+
+SWEP.WorldModelMaterial = ""
+SWEP.WorldModelColor = Color(255, 255, 255, 255)
+SWEP.WorldModelRenderMode = RENDERMODE_NORMAL
+SWEP.WorldModelRenderFX = kRenderFxNone
+
+SWEP.Recoil = {}
+SWEP.Recoil.Punch = nil

@@ -1,5 +1,3 @@
-// Vanguard Weapon Base, made by Riggs.
-
 // Information
 SWEP.PrintName = "Vanguard Weapon Base" // Weapon name in the HUD
 SWEP.Author = "Riggs" // Author
@@ -45,6 +43,9 @@ SWEP.Primary.RPM = 400 // Rounds per minute, this is used instead of delay if it
 SWEP.Primary.Sequence = ACT_VM_PRIMARYATTACK // The shoot animation
 SWEP.Primary.SequenceIronSights = ACT_VM_PRIMARYATTACK // The shoot animation when iron sighting
 SWEP.Primary.PlaybackRate = 1 // The playback rate of the shoot animation
+
+// Primary fire effects
+
 
 // Primary sound settings
 SWEP.Primary.Sound = Sound("Weapon_Pistol.Single") // Primary fire
