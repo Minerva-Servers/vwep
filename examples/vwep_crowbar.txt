@@ -43,7 +43,7 @@ SWEP.Primary.SoundPitch = 100
 SWEP.Primary.SoundVolume = 1
 SWEP.Primary.SoundChannel = CHAN_AUTO
 
-SWEP.Primary.SoundHit = Sound("Flesh.Melee_Hit")
+SWEP.Primary.SoundHit = Sound("Weapon_Crowbar.Melee_Hit")
 SWEP.Primary.SoundHitWorld = Sound("Weapon_Crowbar.Melee_HitWorld")
 SWEP.Primary.SoundHitLevel = 70
 SWEP.Primary.SoundHitPitch = 100
