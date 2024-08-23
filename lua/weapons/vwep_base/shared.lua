@@ -121,6 +121,10 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 0, "IronSights")
     self:NetworkVar("Bool", 1, "Reloading")
     self:NetworkVar("Float", 0, "NextIdle")
+
+    if ( self.PostSetupDataTables ) then
+        self:PostSetupDataTables()
+    end
 end
 
 function SWEP:Initialize()
@@ -443,10 +447,4 @@ function SWEP:Holster()
     end
 
     return true
-end
-
-function SWEP:SetupDataTables()
-    if ( self.PostSetupDataTables ) then
-        self:PostSetupDataTables()
-    end
 end
