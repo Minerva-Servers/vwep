@@ -243,7 +243,7 @@ function SWEP:ClubEffects()
                     bullet.Force = 1
                     bullet.Damage = 0
                     bullet.Attacker = ply
-                    
+
                     ply:FireBullets(bullet)
                 end
 
@@ -310,11 +310,29 @@ function SWEP:CanIronSight()
 end
 
 function SWEP:CanPrimaryAttack()
-    return self:GetNextPrimaryFire() <= CurTime()
+    if ( self:GetNextPrimaryFire() > CurTime() ) then return false end
+
+    if ( self.CanPrimaryAttackOverride ) then
+        local ply = self:GetOwner()
+        if ( !IsValid(ply) ) then return false end
+
+        return self:CanPrimaryAttackOverride(ply)
+    end
+
+    return true
 end
 
 function SWEP:CanSecondaryAttack()
-    return self:GetNextSecondaryFire() <= CurTime()
+    if ( self:GetNextSecondaryFire() > CurTime() ) then return false end
+
+    if ( self.CanSecondaryAttackOverride ) then
+        local ply = self:GetOwner()
+        if ( !IsValid(ply) ) then return false end
+
+        return self:CanSecondaryAttackOverride(ply)
+    end
+
+    return true
 end
 
 function SWEP:CanReload()
