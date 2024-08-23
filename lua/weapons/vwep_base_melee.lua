@@ -249,6 +249,15 @@ function SWEP:ClubEffects()
 
                 debugoverlay.Line(trace.StartPos, trace.HitPos, 5, Color(255, 0, 0), true)
             end
+        else
+            if ( self.Primary.SoundHitMiss ) then
+                local snd = self.Primary.SoundHitMiss
+                local vol = self.Primary.SoundHitVolume
+                local pitch = self.Primary.SoundHitPitch
+                local channel = self.Primary.SoundHitChannel
+
+                ply:EmitSound(snd, self.Primary.SoundHitLevel, pitch, vol, channel)
+            end
         end
     end)
 
@@ -283,13 +292,13 @@ function SWEP:GetViewModelShootAnimation()
 end
 
 function SWEP:SecondaryAttack()
-    if ( !IsFirstTimePredicted() ) then return end
+    if ( !self:CanSecondaryAttack() ) then return end
 
     if ( self.PreSecondaryAttack ) then
         self:PreSecondaryAttack()
     end
 
-    self:SetNextSecondaryFire(CurTime() + self.IronSightsDelay)
+    self:SetNextSecondaryFire(CurTime() + 1)
 
     if ( self.PostSecondaryAttack ) then
         self:PostSecondaryAttack()
@@ -302,6 +311,10 @@ end
 
 function SWEP:CanPrimaryAttack()
     return self:GetNextPrimaryFire() <= CurTime()
+end
+
+function SWEP:CanSecondaryAttack()
+    return self:GetNextSecondaryFire() <= CurTime()
 end
 
 function SWEP:CanReload()
