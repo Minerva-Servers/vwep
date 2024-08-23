@@ -224,6 +224,7 @@ end
 
 function SWEP:SecondaryAttack()
     if ( !IsFirstTimePredicted() ) then return end
+    if ( !self:CanSecondaryAttack() ) then return end
 
     if ( self.PreSecondaryAttack ) then
         self:PreSecondaryAttack()
