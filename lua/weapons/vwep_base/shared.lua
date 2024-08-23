@@ -156,7 +156,7 @@ function SWEP:QueueIdle(duration)
     duration = duration or vm:SequenceDuration() / vm:GetPlaybackRate()
     duration = math.Round(duration, 2)
     duration = duration + 0.1
-    
+
     self:SetNextIdle(CurTime() + duration)
 end
 
@@ -343,7 +343,7 @@ function SWEP:Reload()
     local vm = ply:GetViewModel()
     local _, duration = self:PlayAnimation(vmReload, self.Reloading.PlaybackRate)
     self:QueueIdle()
-    
+
     self:SetNextPrimaryFire(CurTime() + duration)
 
     local reloadSound, reloadSoundLevel, reloadSoundPitch, reloadSoundVolume, reloadSoundChannel = self.Reloading.Sound, self.Reloading.SoundLevel, self.Reloading.SoundPitch, self.Reloading.SoundVolume, self.Reloading.SoundChannel
@@ -443,4 +443,10 @@ function SWEP:Holster()
     end
 
     return true
+end
+
+function SWEP:SetupDataTables()
+    if ( self.PostSetupDataTables ) then
+        self:PostSetupDataTables()
+    end
 end
