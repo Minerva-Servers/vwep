@@ -118,6 +118,10 @@ SWEP.Recoil = {}
 SWEP.Recoil.Punch = nil // Punch angle
 
 function SWEP:SetupDataTables()
+    if ( self.PreSetupDataTables ) then
+        self:PreSetupDataTables()
+    end
+
     self:NetworkVar("Bool", 0, "IronSights")
     self:NetworkVar("Bool", 1, "Reloading")
     self:NetworkVar("Float", 0, "NextIdle")
