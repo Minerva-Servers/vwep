@@ -1,0 +1,10 @@
+
+<div class="landing">
+	<h1>VWEP Documentation</h1>
+</div>
+
+<div class="wrapper">
+	<p style="text-align: center;">Welcome to the documentation for the Vanguard Weapon Base, a framework for creating weapon bases in Garry's Mod. This documentation is a work in progress, so if you see something that's missing or incorrect, feel free to contribute!</p>
+	<h2>Developers</h2>
+	<p>Wether you are a beginner or an experienced developer, you can find all the information you need to get started with VWEP in the <a href="getting-started">Getting Started</a> section. If you are looking for a specific function or hook, you can find them in the <a href="api">API</a> section.</p>
+</div>
