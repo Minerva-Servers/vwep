@@ -323,10 +323,19 @@ function SWEP:CanReload()
 end
 
 function SWEP:GetViewModelReloadAnimation(bIronsighted)
+    local clip = self:Clip1()
     local reloadSequence = self.Reloading.Sequence or ACT_VM_RELOAD
 
     if ( bIronsighted ) then
-        reloadSequence = self.Reloading.SequenceIronSights or reloadSequence
+        if ( clip <= 0 ) then
+            reloadSequence = self.Reloading.SequenceIronSightsEmpty or reloadSequence
+        else
+            reloadSequence = self.Reloading.SequenceIronSights or reloadSequence
+        end
+    else
+        if ( clip <= 0 ) then
+            reloadSequence = self.Reloading.SequenceEmpty or reloadSequence
+        end
     end
 
     if ( isfunction(reloadSequence) ) then
