@@ -306,6 +306,13 @@ function SWEP:CanPrimaryAttack()
     return self:GetNextPrimaryFire() <= CurTime()
 end
 
+function SWEP:CanSecondaryAttack()
+    if ( !self.IronSightsEnabled ) then return false end
+    if ( self:GetReloading() ) then return false end
+
+    return self:GetNextSecondaryFire() <= CurTime()
+end
+
 function SWEP:CanReload()
     local ply = self:GetOwner()
     if ( !IsValid(ply) ) then return false end
