@@ -138,6 +138,10 @@ function SWEP:DrawWorldModel()
     local matrix = ply:GetBoneMatrix(bone)
     if ( !matrix ) then return end
 
+    if ( self.PreDrawWorldModel ) then
+        self:PreDrawWorldModel()
+    end
+
     local pos, ang = matrix:GetTranslation(), matrix:GetAngles()
     pos, ang = translate(pos, ang, self.WorldModelOffset or Vector(), self.WorldModelOffsetAng or Angle())
 
@@ -183,6 +187,10 @@ function SWEP:DrawWorldModel()
             light.B = v.B
             light.DieTime = CurTime() + ( v.DieTime or 0.1 )
         end
+    end
+
+    if ( self.PostDrawWorldModel ) then
+        self:PostDrawWorldModel()
     end
 end
 

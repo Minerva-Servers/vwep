@@ -140,10 +140,6 @@ SWEP.WorldModelMaterial = "" -- Worldmodel material
 SWEP.WorldModelColor = Color(255, 255, 255, 255) -- Worldmodel color
 SWEP.WorldModelRenderMode = RENDERMODE_NORMAL -- Worldmodel render mode
 SWEP.WorldModelRenderFX = kRenderFxNone -- Worldmodel render fx
-
--- Recoil settings
-SWEP.Recoil = {}
-SWEP.Recoil.Punch = nil -- Punch angle
 ```
 
 ## Documentation
@@ -246,10 +242,6 @@ SWEP.Recoil.Punch = nil -- Punch angle
 - **SWEP.WorldModelColor**: The worldmodel color.
 - **SWEP.WorldModelRenderMode**: The worldmodel render mode.
 - **SWEP.WorldModelRenderFX**: The worldmodel render fx.
-
-### Recoil Settings
-
-- **SWEP.Recoil.Punch**: The punch angle for recoil.
 
 ### Bobbing Settings
 

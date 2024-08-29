@@ -98,10 +98,6 @@ SWEP.WorldModelColor = Color(255, 255, 255, 255) // Worldmodel color
 SWEP.WorldModelRenderMode = RENDERMODE_NORMAL // Worldmodel render mode
 SWEP.WorldModelRenderFX = kRenderFxNone // Worldmodel render fx
 
-// Recoil settings
-SWEP.Recoil = {}
-SWEP.Recoil.Punch = nil // Punch angle
-
 function SWEP:PrimaryAttack()
     if ( !self:CanPrimaryAttack() ) then return end
 
@@ -117,9 +113,10 @@ function SWEP:PrimaryAttack()
     self:ClubEffects()
 
     local ply = self:GetOwner()
-    if ( IsValid(ply) and CLIENT and IsFirstTimePredicted() ) then
-        ply:SetEyeAngles(ply:EyeAngles() + ( self.Recoil.Punch or Angle(-self.Primary.Recoil, 0, 0) ))
-        ply:ViewPunch(self.Recoil.Punch or Angle(-self.Primary.Recoil, 0, 0))
+    if ( IsValid(ply) and IsFirstTimePredicted() ) then
+        local recoilAngle = self.Primary.RecoilAngle or Angle(-self.Primary.Recoil, math.Rand(-self.Primary.Recoil, self.Primary.Recoil), 0)
+        ply:SetEyeAngles(ply:EyeAngles() + Angle(-self.Primary.Recoil, 0, 0))
+        ply:ViewPunch(recoilAngle)
     end
 
     self:SetNextPrimaryFire(CurTime() + self.Primary.NextSwing)
