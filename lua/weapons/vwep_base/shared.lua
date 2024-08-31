@@ -44,9 +44,6 @@ SWEP.Primary.Sequence = ACT_VM_PRIMARYATTACK // The shoot animation
 SWEP.Primary.SequenceIronSights = ACT_VM_PRIMARYATTACK // The shoot animation when iron sighting
 SWEP.Primary.PlaybackRate = 1 // The playback rate of the shoot animation
 
-// Primary fire effects
-
-
 // Primary sound settings
 SWEP.Primary.Sound = Sound("Weapon_Pistol.Single") // Primary fire
 SWEP.Primary.SoundEmpty = Sound("Weapon_Pistol.Empty") // Primary fire when empty
@@ -112,6 +109,19 @@ SWEP.WorldModelMaterial = "" // Worldmodel material
 SWEP.WorldModelColor = Color(255, 255, 255, 255) // Worldmodel color
 SWEP.WorldModelRenderMode = RENDERMODE_NORMAL // Worldmodel render mode
 SWEP.WorldModelRenderFX = kRenderFxNone // Worldmodel render fx
+
+// Weapon effects
+SWEP.Effects = {}
+SWEP.Effects.MuzzleFlash = true // Enable muzzle flash
+SWEP.Effects.MuzzleFlashEffect = "MuzzleFlash" // Muzzle flash effect
+SWEP.Effects.MuzzleFlashFlags = 1 // Muzzle flash flags
+SWEP.Effects.MuzzleFlashScale = 1 // Muzzle flash scale
+SWEP.Effects.MuzzleFlashAttachment = "muzzle" // Muzzle flash attachment
+
+SWEP.Effects.Tracer = true // Enable tracer
+SWEP.Effects.TracerEffect = "Tracer" // Tracer effect
+SWEP.Effects.TracerScale = 1 // Tracer scale
+SWEP.Effects.TracerAttachment = "muzzle" // Tracer attachment
 
 function SWEP:SetupDataTables()
     if ( self.PreSetupDataTables ) then
@@ -202,6 +212,7 @@ function SWEP:CanIronSight()
     local ply = self:GetOwner()
     if ( !IsValid(ply) ) then return false end
 
+    if ( !self.IronSightsEnabled ) then return false end
     if ( self:GetReloading() ) then return false end
     if ( ply:KeyDown(IN_USE) ) then return false end
 
@@ -245,7 +256,7 @@ function SWEP:ShootBullet(damage, num_bullets, aimcone)
     bullet.Dir = self:GetOwner():GetAimVector()
     bullet.Spread = Vector(aimcone, aimcone, aimcone)
     bullet.Tracer = 1
-    bullet.TracerName = "Tracer"
+    bullet.TracerName = self.Effects.TracerEffect
     bullet.Force = damage * 0.5
     bullet.Damage = damage
     bullet.Attacker = self:GetOwner()
@@ -260,7 +271,6 @@ end
 
 function SWEP:GetViewModelShootAnimation()
     local shootSequence = self.Primary.Sequence or ACT_VM_PRIMARYATTACK
-
     if ( self:GetIronSights() ) then
         shootSequence = self.Primary.SequenceIronSights or shootSequence
     end
@@ -274,6 +284,21 @@ function SWEP:GetViewModelShootAnimation()
     return shootSequence
 end
 
+function SWEP:GetShootGesture()
+    local gesture = self.Primary.Gesture or ACT_HL2MP_GESTURE_RANGE_ATTACK_PISTOL
+    if ( self:GetIronSights() ) then
+        gesture = self.Primary.GestureIronSights
+    end
+
+    if ( isfunction(gesture) ) then
+        gesture = gesture(self)
+    elseif ( istable(gesture) ) then
+        gesture = gesture[math.random(#gesture)]
+    end
+
+    return gesture
+end
+
 function SWEP:ShootEffects()
     if ( self.PreShootEffects ) then
         self:PreShootEffects()
@@ -285,7 +310,20 @@ function SWEP:ShootEffects()
     self:PlayAnimation(self:GetViewModelShootAnimation(), self.Primary.PlaybackRate)
     self:QueueIdle()
 
-    ply:MuzzleFlash()
+    if ( CLIENT ) then
+        local ent = self:GetOwner():GetViewModel()
+        if ( self:GetOwner():ShouldDrawLocalPlayer() ) then
+            ent = self.WorldModelEntity
+        end
+
+        local effectData = EffectData()
+        effectData:SetEntity(ent)
+        effectData:SetAttachment(ent:LookupAttachment(self.Effects.MuzzleFlashAttachment or "muzzle"))
+        effectData:SetScale(self.Effects.MuzzleFlashScale or 1)
+        effectData:SetFlags(self.Effects.MuzzleFlashFlags or 1)
+        util.Effect(self.Effects.MuzzleFlashEffect, effectData)
+    end
+
     ply:SetAnimation(PLAYER_ATTACK1)
 
     if ( self.PostShootEffects ) then
