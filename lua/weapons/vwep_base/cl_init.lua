@@ -97,7 +97,9 @@ function SWEP:PreDrawViewModel(vm, weapon, ply)
         vm:SetSkin(self.ViewModelSkin)
     end
 
-    for k, v in ipairs(self.ViewModelBodygroups or {}) do
+    for k, v in pairs(self.ViewModelBodygroups or {}) do // don't use ipairs, can't guarantee sequential order
+        if ( !isnumber(k) or !isnumber(v) ) then continue end
+
         if ( vm:GetBodygroup(k) != v ) then
             vm:SetBodygroup(k, v)
         end
