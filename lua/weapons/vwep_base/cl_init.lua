@@ -15,9 +15,8 @@ local function translate(originalVec, originalAng, newVec, newAng, mul)
 end
 
 local lerpIron
-function SWEP:RenderIronSights(pos, ang)
+function SWEP:GetViewModelPosition(pos, ang)
     if ( !IsValid(self:GetOwner()) ) then return pos, ang end
-    if ( !self.IronSightsPos ) then return pos, ang end
 
     if ( !lerpIron ) then lerpIron = 0 end
 
@@ -31,8 +30,7 @@ function SWEP:RenderIronSights(pos, ang)
         lerpIron = Lerp(time, lerpIron, 0)
     end
 
-    local offset = self.IronSightsPos
-
+    local offset = self.IronSightsPos or Vector()
     if ( self.IronSightsAng ) then
         ang = ang * 1
 
@@ -45,33 +43,30 @@ function SWEP:RenderIronSights(pos, ang)
     pos = pos + offset.y * ang:Forward() * lerpIron
     pos = pos + offset.z * ang:Up() * lerpIron
 
-    return pos, ang
-end
+    local lerpIronInverted = 1 - lerpIron
+    offset = self.ViewModelOffset or Vector()
 
-function SWEP:GetViewModelPosition(pos, ang)
-    pos, ang = self:RenderIronSights(pos, ang)
+    pos = pos + offset.x * ang:Right() * lerpIronInverted
+    pos = pos + offset.y * ang:Forward() * lerpIronInverted
+    pos = pos + offset.z * ang:Up() * lerpIronInverted
 
     return pos, ang
 end
 
 local lerpFOV
 function SWEP:TranslateFOV(fov)
-    if !lerpFOV then lerpFOV = fov end
+    if !lerpFOV then lerpFOV = 1 end
 
     local owner = self:GetOwner()
     if !IsValid(owner) then return fov end
 
     local ft = FrameTime()
-    local time = ft / 5
+    local time = ft / 4
 
     local bIron = self:GetIronSights()
-    if bIron then
-        lerpFOV = Lerp(time, lerpFOV, self.IronSightsFOV * fov)
-    else
-        lerpFOV = Lerp(time, lerpFOV, fov)
-    end
+    lerpFOV = Lerp(time, lerpFOV, bIron and self.IronSightsFOV or 1)
 
-    return lerpFOV
+    return fov * lerpFOV
 end
 
 function SWEP:AdjustMouseSensitivity()
@@ -127,9 +122,7 @@ function SWEP:PreDrawViewModel(vm, weapon, ply)
     end
 end
 
-local WorldModel = ClientsideModel(SWEP.WorldModel, SWEP.WorldModelRenderGroup or RENDERGROUP_OTHER)
-WorldModel:SetNoDraw(true)
-
+local WorldModel
 function SWEP:DrawWorldModel()
     local ply = self:GetOwner()
     if ( !IsValid(ply) ) then return end
@@ -146,6 +139,11 @@ function SWEP:DrawWorldModel()
 
     local pos, ang = matrix:GetTranslation(), matrix:GetAngles()
     pos, ang = translate(pos, ang, self.WorldModelOffset or Vector(), self.WorldModelOffsetAng or Angle())
+
+    if ( !IsValid(WorldModel) ) then
+        WorldModel = ClientsideModel(self.WorldModel, RENDERGROUP_OTHER)
+        WorldModel:SetNoDraw(true)
+    end
 
     WorldModel:SetModel(self.WorldModel)
     WorldModel:SetPos(pos)

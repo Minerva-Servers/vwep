@@ -73,7 +73,7 @@ SWEP.ViewModelOffset = Vector(0, 0, 0) // Viewmodel offset
 SWEP.ViewModelOffsetAng = Angle(0, 0, 0) // Viewmodel angle offset
 SWEP.ViewModelScale = 1 // Viewmodel scale
 SWEP.ViewModelDynamicLights = {
-    {Pos = Vector(0, 0, 0), Brightness = 1, Size = 1, Decay = 100, Color = Color(255, 255, 255, 255)} // Example
+    --{Pos = Vector(0, 0, 0), Brightness = 1, Size = 1, Decay = 100, Color = Color(255, 255, 255, 255)} // Example
 }
 
 SWEP.ViewModelMaterial = "" // Viewmodel material
@@ -90,7 +90,7 @@ SWEP.WorldModelOffset = Vector(0, 0, 0) // Worldmodel offset
 SWEP.WorldModelOffsetAng = Angle(0, 0, 0) // Worldmodel angle offset
 SWEP.WorldModelScale = 1 // Worldmodel scale
 SWEP.WorldModelDynamicLights = {
-    {Pos = Vector(0, 0, 0), Brightness = 1, Size = 1, Decay = 100, Color = Color(255, 255, 255)} // Example
+    --{Pos = Vector(0, 0, 0), Brightness = 1, Size = 1, Decay = 100, Color = Color(255, 255, 255)} // Example
 }
 
 SWEP.WorldModelMaterial = "" // Worldmodel material

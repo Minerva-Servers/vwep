@@ -85,7 +85,7 @@ SWEP.ViewModelOffset = Vector(0, 0, 0) // Viewmodel offset
 SWEP.ViewModelOffsetAng = Angle(0, 0, 0) // Viewmodel angle offset
 SWEP.ViewModelScale = 1 // Viewmodel scale
 SWEP.ViewModelDynamicLights = {
-    {Pos = Vector(0, 0, 0), Brightness = 1, Size = 1, Decay = 100, Color = Color(255, 255, 255, 255)} // Example
+    --{Pos = Vector(0, 0, 0), Brightness = 1, Size = 1, Decay = 100, Color = Color(255, 255, 255, 255)} // Example
 }
 
 SWEP.ViewModelMaterial = "" // Viewmodel material
@@ -102,7 +102,7 @@ SWEP.WorldModelOffset = Vector(0, 0, 0) // Worldmodel offset
 SWEP.WorldModelOffsetAng = Angle(0, 0, 0) // Worldmodel angle offset
 SWEP.WorldModelScale = 1 // Worldmodel scale
 SWEP.WorldModelDynamicLights = {
-    {Pos = Vector(0, 0, 0), Brightness = 1, Size = 1, Decay = 100, Color = Color(255, 255, 255)} // Example
+    --{Pos = Vector(0, 0, 0), Brightness = 1, Size = 1, Decay = 100, Color = Color(255, 255, 255)} // Example
 }
 
 SWEP.WorldModelMaterial = "" // Worldmodel material
@@ -316,12 +316,14 @@ function SWEP:ShootEffects()
             ent = self.WorldModelEntity
         end
 
-        local effectData = EffectData()
-        effectData:SetEntity(ent)
-        effectData:SetAttachment(ent:LookupAttachment(self.Effects.MuzzleFlashAttachment or "muzzle"))
-        effectData:SetScale(self.Effects.MuzzleFlashScale or 1)
-        effectData:SetFlags(self.Effects.MuzzleFlashFlags or 1)
-        util.Effect(self.Effects.MuzzleFlashEffect, effectData)
+        if ( IsValid(ent) ) then
+            local effectData = EffectData()
+            effectData:SetEntity(ent)
+            effectData:SetAttachment(ent:LookupAttachment(self.Effects.MuzzleFlashAttachment or "muzzle"))
+            effectData:SetScale(self.Effects.MuzzleFlashScale or 1)
+            effectData:SetFlags(self.Effects.MuzzleFlashFlags or 1)
+            util.Effect(self.Effects.MuzzleFlashEffect, effectData)
+        end
     end
 
     ply:SetAnimation(PLAYER_ATTACK1)
