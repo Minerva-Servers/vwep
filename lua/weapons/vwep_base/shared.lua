@@ -189,6 +189,12 @@ function SWEP:PrimaryAttack()
         self:PrePrimaryAttack()
     end
 
+    if ( self:Clip1() <= 0 ) then
+        self:EmitSound(self.Primary.SoundEmpty, 60, 100, 1, CHAN_WEAPON)
+        self:SetNextPrimaryFire(CurTime() + 0.2)
+        return
+    end
+
     self:ShootBullet(self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone)
 
     self:EmitSound(self.Primary.Sound, self.Primary.SoundLevel or 100, self.Primary.SoundPitch or 100, self.Primary.SoundVolume or 1, self.Primary.SoundChannel or CHAN_WEAPON)
@@ -334,11 +340,7 @@ function SWEP:ShootEffects()
 end
 
 function SWEP:CanPrimaryAttack()
-    if ( self:Clip1() <= 0 ) then
-        self:EmitSound(self.Primary.SoundEmpty, 60, 100, 1, CHAN_WEAPON)
-        self:SetNextPrimaryFire(CurTime() + 0.2)
-        return false
-    end
+    if ( self:GetReloading() ) then return false end
 
     return self:GetNextPrimaryFire() <= CurTime()
 end

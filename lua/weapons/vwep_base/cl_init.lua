@@ -61,7 +61,7 @@ function SWEP:TranslateFOV(fov)
     if !IsValid(owner) then return fov end
 
     local ft = FrameTime()
-    local time = ft / 4
+    local time = ft
 
     local bIron = self:GetIronSights()
     lerpFOV = Lerp(time, lerpFOV, bIron and self.IronSightsFOV or 1)
