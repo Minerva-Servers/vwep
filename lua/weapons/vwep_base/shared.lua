@@ -75,6 +75,32 @@ SWEP.Reloading.SoundPitch = 100 // The reload sound pitch
 SWEP.Reloading.SoundVolume = 1 // The reload sound volume
 SWEP.Reloading.SoundChannel = CHAN_WEAPON // The reload sound channel
 
+// Cycling settings
+SWEP.Cycling = {}
+SWEP.Cycling.Enabled = false // Enable cycling
+SWEP.Cycling.Sequence = ACT_VM_RELOAD // The cycling animation
+SWEP.Cycling.SequenceIronSights = ACT_VM_RELOAD // The cycling animation when iron sighting
+SWEP.Cycling.PlaybackRate = 1 // The playback rate of the cycling animation
+SWEP.Cycling.Sound = Sound("Weapon_Pistol.Reload") // The cycling sound
+SWEP.Cycling.SoundLevel = 60 // The cycling sound level, used for sound distance
+SWEP.Cycling.SoundPitch = 100 // The cycling sound pitch
+SWEP.Cycling.SoundVolume = 1 // The cycling sound volume
+SWEP.Cycling.SoundChannel = CHAN_WEAPON // The cycling sound channel
+SWEP.Cycling.Delay = 0.5 // The delay between cycling
+SWEP.Cycling.Automatic = false // Is the cycling automatic?
+
+// Pump action settings
+SWEP.PumpAction = {}
+SWEP.PumpAction.Enabled = false // Enable pump action
+SWEP.PumpAction.Sequence = ACT_SHOTGUN_PUMP // The pump action animation
+SWEP.PumpAction.SequenceIronSights = ACT_SHOTGUN_PUMP // The pump action animation when iron sighting
+SWEP.PumpAction.PlaybackRate = 1 // The playback rate of the pump action animation
+SWEP.PumpAction.Sound = Sound("Weapon_Shotgun.Special1") // The pump action sound
+SWEP.PumpAction.SoundLevel = 60 // The pump action sound level, used for sound distance
+SWEP.PumpAction.SoundPitch = 100 // The pump action sound pitch
+SWEP.PumpAction.SoundVolume = 1 // The pump action sound volume
+SWEP.PumpAction.SoundChannel = CHAN_WEAPON // The pump action sound channel
+
 // Viewmodel settings
 SWEP.ViewModel = "models/weapons/c_pistol.mdl" // The model used in first-person view
 SWEP.ViewModelSkin = 0 // Viewmodel skin
