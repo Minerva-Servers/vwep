@@ -201,10 +201,17 @@ function SWEP:PrimaryAttack()
     self:TakePrimaryAmmo(1)
 
     local ply = self:GetOwner()
-    if ( IsValid(ply) and IsFirstTimePredicted() ) then
-        local recoilAngle = self.Primary.RecoilAngle or Angle(-self.Primary.Recoil, math.Rand(-self.Primary.Recoil, self.Primary.Recoil), 0)
-        ply:SetEyeAngles(ply:EyeAngles() + Angle(-self.Primary.Recoil, 0, 0))
-        ply:ViewPunch(recoilAngle)
+    if ( IsValid(ply) ) then
+        local recoilAngle = Angle(-1, math.Rand(-1, 1), 0)
+
+        if ( self:GetIronSights() ) then
+            recoilAngle = recoilAngle * ( self.Primary.RecoilIronSights or self.Primary.Recoil )
+        else
+            recoilAngle = recoilAngle * self.Primary.Recoil
+        end
+
+        ply:SetEyeAngles(ply:EyeAngles() + recoilAngle * 0.75)
+        ply:ViewPunch(recoilAngle * 0.5)
     end
 
     self:SetNextPrimaryFire(self:CalculateNextPrimaryFire())

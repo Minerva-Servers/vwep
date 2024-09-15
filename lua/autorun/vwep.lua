@@ -5,7 +5,7 @@ vwep.info.name = "Vanguard Weapon Base"
 vwep.info.abbreviation = "VWEP"
 vwep.info.description = "A simple weapon base for Garry's Mod."
 vwep.info.author = "Riggs"
-vwep.info.version = "0.2.1"
+vwep.info.version = "0.2.2"
 vwep.info.color = Color(255, 100, 0)
 
 // Include the utility functions, first.
