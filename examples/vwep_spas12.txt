@@ -115,8 +115,8 @@ SWEP.WorldModel = "models/weapons/w_shotgun.mdl"
 SWEP.WorldModelSkin = 0
 SWEP.WorldModelBodygroups = {}
 SWEP.WorldModelBone = "ValveBiped.Bip01_R_Hand"
-SWEP.WorldModelOffset = Vector(0, 10, 3)
-SWEP.WorldModelOffsetAng = Angle(-10, 0, 180)
+SWEP.WorldModelOffset = Vector(1, -17, -0.75)
+SWEP.WorldModelOffsetAng = Angle(-15, 180, 180)
 SWEP.WorldModelScale = 1
 SWEP.WorldModelDynamicLights = {}
 
