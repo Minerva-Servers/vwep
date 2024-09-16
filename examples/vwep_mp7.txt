@@ -30,14 +30,15 @@ SWEP.Primary.DefaultClip = 45
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "SMG1"
 
-SWEP.Primary.Recoil = 0.4
-SWEP.Primary.Damage = 10
+SWEP.Primary.Recoil = 0.55
+SWEP.Primary.RecoilIronSights = 0.45
+SWEP.Primary.Damage = 9
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Cone = 0.03
 SWEP.Primary.Delay = 0.5
 SWEP.Primary.Sequence = "fire04"
 SWEP.Primary.SequenceIronSights = "fire01"
-SWEP.Primary.RPM = 800
+SWEP.Primary.RPM = 950
 
 SWEP.Primary.Sound = Sound("VWEP.MP7.Single")
 SWEP.Primary.SoundEmpty = Sound("Weapon_SMG1.Empty")
@@ -70,7 +71,7 @@ SWEP.Reloading.SoundChannel = CHAN_WEAPON
 SWEP.ViewModel = "models/weapons/c_smg1.mdl"
 SWEP.ViewModelSkin = 0
 SWEP.ViewModelBodygroups = {}
-SWEP.ViewModelFOV = 62
+SWEP.ViewModelFOV = 50
 SWEP.ViewModelFlip = false
 SWEP.ViewModelOffset = Vector(0, 0, 0)
 SWEP.ViewModelOffsetAng = Angle(0, 0, 0)
@@ -82,12 +83,12 @@ SWEP.ViewModelColor = Color(255, 255, 255, 255)
 SWEP.ViewModelRenderMode = RENDERMODE_NORMAL
 SWEP.ViewModelRenderFX = kRenderFxNone
 
-SWEP.WorldModel = "models/weapons/w_smg1.mdl"
+SWEP.WorldModel = "models/minerva/halflife2/weapons/w_smg1.mdl"
 SWEP.WorldModelSkin = 0
 SWEP.WorldModelBodygroups = {}
 SWEP.WorldModelBone = "ValveBiped.Bip01_R_Hand"
-SWEP.WorldModelOffset = Vector(0, 10, 4)
-SWEP.WorldModelOffsetAng = Angle(0, 0, 180)
+SWEP.WorldModelOffset = Vector(0, 10, 3)
+SWEP.WorldModelOffsetAng = Angle(-10, 0, 180)
 SWEP.WorldModelScale = 1
 SWEP.WorldModelDynamicLights = {}
 
