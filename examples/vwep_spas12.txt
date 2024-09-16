@@ -1,0 +1,128 @@
+AddCSLuaFile()
+
+SWEP.Base = "vwep_base"
+
+SWEP.PrintName = "SPAS-12"
+SWEP.Author = "Riggs"
+SWEP.Instructions = "Left click to shoot, right click to zoom."
+SWEP.Category = "Vanguard"
+
+SWEP.Slot = 2
+SWEP.SlotPos = 1
+SWEP.DrawAmmo = true
+SWEP.DrawCrosshair = true
+SWEP.DrawWeaponInfoBox = false
+
+SWEP.Spawnable = true
+SWEP.AdminOnly = false
+
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = false
+SWEP.Secondary.Ammo = "none"
+
+SWEP.HoldType = "shotgun"
+SWEP.UseHands = true
+SWEP.Sensitivity = 1
+
+SWEP.Primary.ClipSize = 6
+SWEP.Primary.DefaultClip = 6
+SWEP.Primary.Automatic = false
+SWEP.Primary.Ammo = "buckshot"
+
+SWEP.Primary.Recoil = 0.8
+SWEP.Primary.RecoilIronSights = 0.6
+SWEP.Primary.Damage = 10
+SWEP.Primary.NumShots = 6
+SWEP.Primary.Cone = 0.1
+SWEP.Primary.Delay = 0.5
+SWEP.Primary.Sequence = "fire01"
+SWEP.Primary.SequenceIronSights = "fire01"
+SWEP.Primary.RPM = 60
+
+SWEP.Primary.Sound = Sound("VWEP.SPAS12.Single")
+SWEP.Primary.SoundEmpty = Sound("Weapon_Shotgun.Empty")
+SWEP.Primary.SoundLevel = 100
+SWEP.Primary.SoundPitch = 100
+SWEP.Primary.SoundVolume = 1
+SWEP.Primary.SoundChannel = CHAN_WEAPON
+
+SWEP.IronSightsEnabled = true
+SWEP.IronSightsPos = Vector(-8.971, -10, 4.28)
+SWEP.IronSightsAng = Vector(-0.35, 0, 0)
+SWEP.IronSightsFOV = 0.75
+SWEP.IronSightsSensitivity = 0.5
+SWEP.IronSightsCanMove = true
+SWEP.IronSightsCanMoveRun = false
+SWEP.IronSightsDelay = 0.25
+SWEP.IronSightsRunSpeed = 0.75
+SWEP.IronSightsToggle = false
+
+SWEP.Reloading = {}
+SWEP.Reloading.Sequence = "reload2"
+SWEP.Reloading.SequenceIronSights = "reload2"
+SWEP.Reloading.PlaybackRate = 1
+SWEP.Reloading.Sound = Sound("Weapon_Shotgun.Reload")
+SWEP.Reloading.SoundLevel = 60
+SWEP.Reloading.SoundPitch = 100
+SWEP.Reloading.SoundVolume = 1
+SWEP.Reloading.SoundChannel = CHAN_WEAPON
+
+SWEP.Cycling = {}
+SWEP.Cycling.Enabled = true
+SWEP.Cycling.SequenceEntry = "reload1"
+SWEP.Cycling.Sequence = "reload2"
+SWEP.Cycling.SequenceExit = "reload3"
+SWEP.Cycling.SequenceIronSightsEntry = "reload1"
+SWEP.Cycling.SequenceIronSights = "reload2"
+SWEP.Cycling.SequenceIronSightsExit = "reload3"
+SWEP.Cycling.PlaybackRate = 1
+SWEP.Cycling.Sound = Sound("Weapon_Shotgun.Reload")
+SWEP.Cycling.SoundLevel = 60
+SWEP.Cycling.SoundPitch = 100
+SWEP.Cycling.SoundVolume = 1
+SWEP.Cycling.SoundChannel = CHAN_WEAPON
+SWEP.Cycling.Delay = -0.1
+SWEP.Cycling.Automatic = true
+
+SWEP.PumpAction = {}
+SWEP.PumpAction.Enabled = true
+SWEP.PumpAction.Sequence = "pump"
+SWEP.PumpAction.SequenceIronSights = "pump"
+SWEP.PumpAction.PlaybackRate = 1
+SWEP.PumpAction.Sound = Sound("Weapon_Shotgun.Special1")
+SWEP.PumpAction.SoundLevel = 60
+SWEP.PumpAction.SoundPitch = 100
+SWEP.PumpAction.SoundVolume = 1
+SWEP.PumpAction.SoundChannel = CHAN_WEAPON
+
+SWEP.ViewModel = "models/weapons/c_shotgun.mdl"
+SWEP.ViewModelSkin = 0
+SWEP.ViewModelBodygroups = {}
+SWEP.ViewModelFOV = 50
+SWEP.ViewModelFlip = false
+SWEP.ViewModelOffset = Vector(0, 0, 0)
+SWEP.ViewModelOffsetAng = Angle(0, 0, 0)
+SWEP.ViewModelScale = 1
+SWEP.ViewModelDynamicLights = {}
+
+SWEP.ViewModelMaterial = ""
+SWEP.ViewModelColor = Color(255, 255, 255, 255)
+SWEP.ViewModelRenderMode = RENDERMODE_NORMAL
+SWEP.ViewModelRenderFX = kRenderFxNone
+
+SWEP.WorldModel = "models/minerva/halflife2/weapons/w_shotgun.mdl"
+SWEP.WorldModelSkin = 0
+SWEP.WorldModelBodygroups = {}
+SWEP.WorldModelBone = "ValveBiped.Bip01_R_Hand"
+SWEP.WorldModelOffset = Vector(0, 10, 3)
+SWEP.WorldModelOffsetAng = Angle(-10, 0, 180)
+SWEP.WorldModelScale = 1
+SWEP.WorldModelDynamicLights = {}
+
+SWEP.WorldModelMaterial = ""
+SWEP.WorldModelColor = Color(255, 255, 255, 255)
+SWEP.WorldModelRenderMode = RENDERMODE_NORMAL
+SWEP.WorldModelRenderFX = kRenderFxNone
+
+vwep.sounds:Register("VWEP.SPAS12.Single", "weapons/shotgun/shotgun_fire7.wav", {98, 101}, 1, 100)
