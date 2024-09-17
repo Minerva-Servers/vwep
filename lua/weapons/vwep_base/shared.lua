@@ -569,9 +569,10 @@ function SWEP:Reload()
             end)
         end
     else
+        local clip = self:Clip1()
         local vmReload = self:GetViewModelReloadAnimation(bIronsighted)
         local vm = ply:GetViewModel()
-        local _, duration = self:PlayAnimation(vmReload, self.Reloading.PlaybackRate)
+        local _, duration = self:PlayAnimation(vmReload, clip <= 0 and self.Reloading.PlaybackRateEmpty or self.Reloading.PlaybackRate)
         self:QueueIdle()
 
         self:SetNextPrimaryFire(CurTime() + duration)
