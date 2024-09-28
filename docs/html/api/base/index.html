@@ -1,136 +1,136 @@
 
 
 <html>
-	<head>
-		<title>Base - VWEP Documentation</title>
+    <head>
+        <title>Base - VWEP Documentation</title>
 
-		<meta property="og:type" content="website" />
-		<meta property="og:title" content="Base - VWEP Documentation" />
-		<meta property="og:site_name" content="VWEP Documentation" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Base - VWEP Documentation" />
+        <meta property="og:site_name" content="VWEP Documentation" />
 
-			<meta property="og:description" content="Base functions for weapons." />
+            <meta property="og:description" content="Base functions for weapons." />
 
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro" />
-		<link rel="stylesheet" href="../../ldoc.css" />
-		<link rel="stylesheet" href="../../highlight.css" />
-	</head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro" />
+        <link rel="stylesheet" href="../../ldoc.css" />
+        <link rel="stylesheet" href="../../highlight.css" />
+    </head>
 
-	<body>
-		<main>
+    <body>
+        <main>
 
 
 <nav>
-	<header>
-			<h1><a href="../../">VWEP Documentation</a></h1>
-		<input id="search" type="search" autocomplete="off" placeholder="Search..." />
-	</header>
+    <header>
+            <h1><a href="../../">VWEP Documentation</a></h1>
+        <input id="search" type="search" autocomplete="off" placeholder="Search..." />
+    </header>
 
-	<section>
-				<details class="category" open>
-					<summary>
-						<h2>API</h2>
-					</summary>
+    <section>
+                <details class="category" open>
+                    <summary>
+                        <h2>API</h2>
+                    </summary>
 
-					<ul>
-							<li>
-									<details open>
-									<summary><a href="../../api/base/">Base</a></summary>
+                    <ul>
+                            <li>
+                                    <details open>
+                                    <summary><a href="../../api/base/">Base</a></summary>
 
-									<ul>
+                                    <ul>
 
 
-										<li>
-											<span class="realm shared"></span>
-											<a href="../../api/base/#PrePrimaryAttack">
-PrePrimaryAttack											</a>
-										</li>
+                                        <li>
+                                            <span class="realm shared"></span>
+                                            <a href="../../api/base/#PrePrimaryAttack">
+PrePrimaryAttack                                            </a>
+                                        </li>
 
-									</ul>
-									</details>
-							</li>
-					</ul>
-				</details>
-	</section>
+                                    </ul>
+                                    </details>
+                            </li>
+                    </ul>
+                </details>
+    </section>
 </nav>
 
 
-			<article>
-					<div class="wrapper">
+            <article>
+                    <div class="wrapper">
 
 <header class="module">
-	<h1>Base</h1>
-	<h2>Base functions for weapons.</h2>
+    <h1>Base</h1>
+    <h2>Base functions for weapons.</h2>
 </header>
 
 <p>The Weapon Base comes with a few functions that can be used to modify the weapon's behavior. These functions are called by the weapon base itself and should be overwritten by the weapon's code.</p>
 
-	<h1 class="title">Functions</h1>
+    <h1 class="title">Functions</h1>
 
-		<section class="method">
-			<header>
-				<a class="anchor" id="PrePrimaryAttack">
-					<h1><span class="realm shared"></span></span>PrePrimaryAttack(client)</h1>
-				</a>
-
-
-					<a class="reference" href="https://github.com/Minerva-Servers/vwep/tree/master/\base.lua#L18">View source &raquo;</a>
-
-					<p>Called before the primary attack.  Can be used to check if the player can attack.</p>
-			</header>
+        <section class="method">
+            <header>
+                <a class="anchor" id="PrePrimaryAttack">
+                    <h1><span class="realm shared"></span></span>PrePrimaryAttack(client)</h1>
+                </a>
 
 
-					<h3>Parameters</h3>
+                    <a class="reference" href="https://github.com/Minerva-Servers/vwep/tree/master/\base.lua#L18">View source &raquo;</a>
+
+                    <p>Called before the primary attack.  Can be used to check if the player can attack.</p>
+            </header>
 
 
-					<ul>
-
-							<li>
-								<span class="tag parameter">client</span>
-
-									<span class="tag"><span class="type">Player</span></span>
+                    <h3>Parameters</h3>
 
 
-								<p> The client that is using the weapon</p>
-							</li>
-					</ul>
+                    <ul>
+
+                            <li>
+                                <span class="tag parameter">client</span>
+
+                                    <span class="tag"><span class="type">Player</span></span>
 
 
-				<h3>Returns</h3>
-				<ul>
+                                <p> The client that is using the weapon</p>
+                            </li>
+                    </ul>
 
-							<li>
-									<span class="tag type">any</span>
 
-								<p>boolean Whether the player can attack or not</p>
-							</li>
+                <h3>Returns</h3>
+                <ul>
 
-				</ul>
+                            <li>
+                                    <span class="tag type">any</span>
 
-				<h3>Example Usage</h3>
-					<pre><code>function SWEP:PrePrimaryAttack(client)
-	return client:IsAdmin() -- only admins can attack with this weapon
+                                <p>boolean Whether the player can attack or not</p>
+                            </li>
+
+                </ul>
+
+                <h3>Example Usage</h3>
+                    <pre><code>function SWEP:PrePrimaryAttack(client)
+    return client:IsAdmin() -- only admins can attack with this weapon
 end
 </code></pre>
 
-		</section>
+        </section>
 
-					</div>
-			</article>
-		</main>
+                    </div>
+            </article>
+        </main>
 
-		<script type="text/javascript" src="../../app.js"></script>
-		<script type="text/javascript" src="../../highlight.min.js"></script>
-		<script type="text/javascript">
-			var elements = document.querySelectorAll("pre code")
+        <script type="text/javascript" src="../../app.js"></script>
+        <script type="text/javascript" src="../../highlight.min.js"></script>
+        <script type="text/javascript">
+            var elements = document.querySelectorAll("pre code")
 
-			hljs.configure({
-				languages: ["lua"]
-			});
+            hljs.configure({
+                languages: ["lua"]
+            });
 
-			for (var i = 0; i < elements.length; i++)
-			{
-				hljs.highlightBlock(elements[i]);
-			}
-		</script>
-	</body>
+            for (var i = 0; i < elements.length; i++)
+            {
+                hljs.highlightBlock(elements[i]);
+            }
+        </script>
+    </body>
 </html>

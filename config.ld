@@ -1,6 +1,6 @@
 
 file = {
-	"docs/api"
+    "docs/api"
 }
 
 dir = "docs/html"
@@ -26,8 +26,8 @@ pretty_urls = true -- avoid showing .html in urls
 pretty_topic_names = true -- strips extension from manual filenames, this does not check filename collisions
 
 custom_tags = {
-	{"realm", hidden = true},
-	{"internal", hidden = true}
+    {"realm", hidden = true},
+    {"internal", hidden = true}
 }
 
 new_type("api", "API", true)

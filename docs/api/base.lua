@@ -13,7 +13,7 @@ The Weapon Base comes with a few functions that can be used to modify the weapon
 -- @player client The client that is using the weapon
 -- @return boolean Whether the player can attack or not
 -- @usage function SWEP:PrePrimaryAttack(client)
--- 	return client:IsAdmin() -- only admins can attack with this weapon
+--     return client:IsAdmin() -- only admins can attack with this weapon
 -- end
 function PrePrimaryAttack(client)
 end
