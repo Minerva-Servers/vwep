@@ -21,6 +21,7 @@ SWEP.Secondary.ClipSize = -1 // No secondary clip
 SWEP.Secondary.DefaultClip = -1 // No secondary default clip
 SWEP.Secondary.Automatic = false // Secondary fire automatic?
 SWEP.Secondary.Ammo = "none" // No secondary ammo
+SWEP.Secondary.Delay = 0.5 // Secondary fire delay
 
 // Weapon settings
 SWEP.HoldType = "pistol" // Weapon hold type
@@ -60,7 +61,6 @@ SWEP.IronSightsFOV = 0.75 // Iron sights field of view
 SWEP.IronSightsSensitivity = 0.5 // Iron sights sensitivity
 SWEP.IronSightsCanMove = true // Can the player iron sight while moving?
 SWEP.IronSightsCanMoveRun = false // Can the player iron sight while running?
-SWEP.IronSightsDelay = 0.25 // Delay between iron sights toggling
 SWEP.IronSightsRunSpeed = 0.75 // Check if the player is marked as running at this speed
 SWEP.IronSightsToggle = false // Is the iron sight a toggle mechanism, mark as false if it's a hold mechanism
 
@@ -241,7 +241,10 @@ function SWEP:PrimaryAttack()
             recoilAngle = recoilAngle * self.Primary.Recoil
         end
 
-        ply:SetEyeAngles(ply:EyeAngles() + recoilAngle * 0.75)
+        if ( IsFirstTimePredicted() and ( CLIENT or game.SinglePlayer() ) ) then
+            ply:SetEyeAngles(ply:EyeAngles() + recoilAngle * 0.75)
+        end
+
         ply:ViewPunch(recoilAngle * 0.5)
     end
 
@@ -282,7 +285,7 @@ function SWEP:SecondaryAttack()
         self:PreSecondaryAttack()
     end
 
-    self:SetNextSecondaryFire(CurTime() + self.IronSightsDelay)
+    self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
 
     if ( self.PostSecondaryAttack ) then
         self:PostSecondaryAttack()

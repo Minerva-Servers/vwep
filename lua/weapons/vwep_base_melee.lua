@@ -25,6 +25,7 @@ SWEP.Secondary.ClipSize = -1 // No secondary clip
 SWEP.Secondary.DefaultClip = -1 // No secondary default clip
 SWEP.Secondary.Automatic = false // Secondary fire automatic?
 SWEP.Secondary.Ammo = "none" // No secondary ammo
+SWEP.Secondary.Delay = 0.5 // Secondary fire delay
 
 // Weapon settings
 SWEP.HoldType = "pistol" // Weapon hold type
@@ -295,7 +296,7 @@ function SWEP:SecondaryAttack()
         self:PreSecondaryAttack()
     end
 
-    self:SetNextSecondaryFire(CurTime() + 1)
+    self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
 
     if ( self.PostSecondaryAttack ) then
         self:PostSecondaryAttack()
