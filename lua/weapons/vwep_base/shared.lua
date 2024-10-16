@@ -363,12 +363,13 @@ function SWEP:ShootEffects()
             ent = self.WorldModelEntity
         end
 
-        if ( IsValid(ent) ) then
+        if ( IsValid(ent) and self.Effects.MuzzleFlash ) then
             local effectData = EffectData()
             effectData:SetEntity(ent)
             effectData:SetAttachment(ent:LookupAttachment(self.Effects.MuzzleFlashAttachment or "muzzle"))
             effectData:SetScale(self.Effects.MuzzleFlashScale or 1)
             effectData:SetFlags(self.Effects.MuzzleFlashFlags or 1)
+
             util.Effect(self.Effects.MuzzleFlashEffect, effectData)
         end
     end
@@ -486,10 +487,10 @@ function SWEP:Reload()
                         local _, duration = self:PlayAnimation(self.Cycling.Sequence, self.Cycling.PlaybackRate)
                         self:QueueIdle()
                     end)
-    
+
                     self:SetNextPrimaryFire(CurTime() + duration)
                     self:SetNextSecondaryFire(CurTime() + duration)
-    
+
                     local cycleSound, cycleSoundLevel, cycleSoundPitch, cycleSoundVolume, cycleSoundChannel = self.Cycling.Sound, self.Cycling.SoundLevel, self.Cycling.SoundPitch, self.Cycling.SoundVolume, self.Cycling.SoundChannel
                     self:EmitSound(cycleSound, cycleSoundLevel or 60, cycleSoundPitch or 100, cycleSoundVolume or 1, cycleSoundChannel or CHAN_WEAPON)
 
