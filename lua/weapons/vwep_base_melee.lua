@@ -128,8 +128,6 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:ClubAttack()
-    if ( !self:CanPrimaryAttack() ) then return end
-
     if ( self.PreClubAttack ) then
         self:PreClubAttack()
     end
