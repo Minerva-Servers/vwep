@@ -1,3 +1,4 @@
-AddCSLuaFile("cl_init.lua")
-AddCSLuaFile("shared.lua")
-include("shared.lua")
+VWEP = SWEP
+
+vwep.util:Include("cl_init.lua")
+vwep.util:Include("shared.lua")
