@@ -5,7 +5,7 @@ vwep.info.name = "Vanguard Weapon Base"
 vwep.info.abbreviation = "VWEP"
 vwep.info.description = "A simple weapon base for Garry's Mod."
 vwep.info.author = "Riggs"
-vwep.info.version = "0.4.0"
+vwep.info.version = "0.4.1"
 vwep.info.color = Color(255, 100, 0)
 
 // Include the utility functions, first.
@@ -14,6 +14,7 @@ include("vwep/sh_util.lua")
 
 vwep.util:IncludeDir("vwep/modules")
 
+local install = "https://github.com/Minerva-Servers/vwep/archive/refs/heads/main.zip"
 local function CheckVersion(response)
     if ( response == vwep.info.version ) then
         if ( SERVER ) then
@@ -30,7 +31,6 @@ local function CheckVersion(response)
     end
 end
 
-local install = "https://github.com/Minerva-Servers/vwep/archive/refs/heads/main.zip"
 hook.Add("Initialize", "VWEP.CheckVersion", function()
     http.Fetch("https://raw.githubusercontent.com/Minerva-Servers/vwep/main/VERSION.txt", function(response)
         CheckVersion(response)
