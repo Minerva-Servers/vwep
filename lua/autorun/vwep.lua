@@ -36,3 +36,46 @@ hook.Add("Initialize", "VWEP.CheckVersion", function()
         CheckVersion(response)
     end)
 end)
+
+concommand.Add("vwep_version", function()
+    http.Fetch("https://raw.githubusercontent.com/Minerva-Servers/vwep/main/VERSION.txt", function(response)
+        CheckVersion(response)
+    end)
+end)
+
+concommand.Add("vwep_install", function()
+    if ( CLIENT ) then
+        gui.OpenURL(install)
+    else
+        vwep.util:Message("You can download the latest version of " .. vwep.info.name .. " using the following link: " .. install .. ".")
+    end
+end)
+
+if ( CLIENT ) then
+    concommand.Add("vwep_toggle_firemode", function(ply, cmd, args)
+        if ( !IsValid(ply) or !ply:IsPlayer() ) then return end
+
+        local wep = ply:GetActiveWeapon()
+        if ( !IsValid(wep) or !wep.IsVWEP ) then return end
+
+        wep:ToggleFireMode()
+
+        net.Start("VWEP.ToggleFireMode")
+        net.SendToServer()
+
+        vwep.util:Message("You have toggled the firemode of your weapon.")
+    end)
+else
+    util.AddNetworkString("VWEP.ToggleFireMode")
+
+    net.Receive("VWEP.ToggleFireMode", function(len, ply)
+        if ( !IsValid(ply) or !ply:IsPlayer() ) then return end
+
+        local wep = ply:GetActiveWeapon()
+        if ( !IsValid(wep) or !wep.IsVWEP ) then return end
+
+        wep:ToggleFireMode()
+
+        vwep.util:Message(ply, " has toggled the firemode of their weapon.")
+    end)
+end
