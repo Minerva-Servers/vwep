@@ -27,6 +27,8 @@ function VWEP:DrawWorldModel()
     if ( !IsValid(WorldModel) ) then
         WorldModel = ClientsideModel(self.WorldModel, RENDERGROUP_OTHER)
         WorldModel:SetNoDraw(true)
+
+        WorldModel.Owner = ply
     end
 
     WorldModel:SetModel(self.WorldModel)
