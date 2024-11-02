@@ -135,13 +135,17 @@ function SWEP:ClubAttack()
     local ply = self:GetOwner()
     if ( !IsValid(ply) ) then return end
 
+    local trace = {}
+    local hit
+    local dmg
+
     timer.Create("VWEP.ClubAttack." .. self:EntIndex() .. "." .. CurTime(), self.Primary.Delay, 1, function()
         if ( !IsValid(self) or !IsValid(ply) ) then return end
 
         if ( SERVER ) then
             ply:LagCompensation(true)
 
-            local trace = {}
+            trace = {}
             trace.start = ply:GetShootPos()
             trace.endpos = trace.start + ply:GetAimVector() * self.Primary.Range
             trace.filter = ply
@@ -153,9 +157,10 @@ function SWEP:ClubAttack()
             ply:LagCompensation(false)
 
             if ( trace.Hit ) then
-                local hit = trace.Entity
+                hit = trace.Entity
+
                 if ( IsValid(hit) ) then
-                    local dmg = DamageInfo()
+                    dmg = DamageInfo()
                     dmg:SetAttacker(ply)
                     dmg:SetInflictor(self)
                     dmg:SetDamage(self.Primary.Damage)
@@ -167,11 +172,11 @@ function SWEP:ClubAttack()
                 end
             end
         end
-    end)
 
-    if ( self.PostClubAttack ) then
-        self:PostClubAttack()
-    end
+        if ( self.PostClubAttack ) then
+            self:PostClubAttack(trace, hit, dmg)
+        end
+    end)
 end
 
 function SWEP:ClubEffects()
