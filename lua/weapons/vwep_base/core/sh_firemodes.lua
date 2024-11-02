@@ -6,7 +6,12 @@ function VWEP:ThinkFireModes()
         self:PreThinkFireModes()
     end
 
-    hook.Run("VWEP_PreFireModeThink", self)
+    local preFireModeThink = hook.Run("VWEP_PreFireModeThink", self)
+    if ( tobool(preFireModeThink) == false ) then
+        return
+    elseif ( isfunction(preFireModeThink) ) then
+        preFireModeThink(self)
+    end
 
     local owner = self:GetOwner()
     if ( !IsValid(owner) or owner:IsNPC() or owner:IsBot() ) then return end

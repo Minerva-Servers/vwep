@@ -46,7 +46,7 @@ function VWEP:ShootEffects()
     local _, duration = self:PlayAnimation(self:GetViewModelShootAnimation(), self.Primary.PlaybackRate)
     self:QueueIdle()
 
-    if ( CLIENT ) then
+    if ( CLIENT and IsFirstTimePredicted() ) then
         local ent = self:GetOwner():GetViewModel()
         if ( self:GetOwner():ShouldDrawLocalPlayer() ) then
             ent = self:GetWorldModelEntity()
@@ -132,15 +132,13 @@ end
 function VWEP:PrimaryAttack()
     if ( !self:CanPrimaryAttack() ) then return end
 
-    if ( self.PrePrimaryAttack ) then
-        self:PrePrimaryAttack()
+    local prePrimaryAttack = self.PrePrimaryAttack
+    if ( isfunction(prePrimaryAttack) ) then
+        if ( prePrimaryAttack(self) == false ) then return end
     end
 
     if ( self.Primary.BurstCount > 0 ) then
-
         if ( self:GetBurstCount() >= self.Primary.BurstCount ) then
-            print("NEW WAVE")
-            
             self:SetBurstCount(0)
             self:SetNextPrimaryFire(CurTime() + self.Primary.BurstDelay)
         else
