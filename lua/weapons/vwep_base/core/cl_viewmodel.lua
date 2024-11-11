@@ -1,18 +1,15 @@
 local lerpIron
+local lerpLastUpdate = 0
 function VWEP:GetViewModelPosition(pos, ang)
     if ( !IsValid(self:GetOwner()) ) then return pos, ang end
 
     if ( !lerpIron ) then lerpIron = 0 end
 
     local ft = FrameTime()
-    local time = ft * 4
+    local time = ft * 5
 
     local bIron = self:GetIronSights()
-    if ( bIron ) then
-        lerpIron = Lerp(time, lerpIron, 1)
-    else
-        lerpIron = Lerp(time, lerpIron, 0)
-    end
+    lerpIron = Lerp(time, lerpIron, bIron and 1 or 0)
 
     local offset = self.IronSightsPos or Vector()
     if ( self.IronSightsAng ) then

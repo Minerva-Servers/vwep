@@ -3,17 +3,22 @@ VWEP = SWEP
 vwep.util:Include("shared.lua")
 
 local lerpFOV
+local lerpLastUpdate = 0
 function VWEP:TranslateFOV(fov)
-    if !lerpFOV then lerpFOV = 1 end
+    if ( !lerpFOV ) then lerpFOV = 1 end
 
     local owner = self:GetOwner()
-    if !IsValid(owner) then return fov end
+    if ( !IsValid(owner) ) then return fov end
 
-    local ft = FrameTime()
-    local time = ft
+    if ( lerpLastUpdate < CurTime() ) then
+        local ft = FrameTime()
+        local time = ft * 15
 
-    local bIron = self:GetIronSights()
-    lerpFOV = Lerp(time, lerpFOV, bIron and self.IronSightsFOV or 1)
+        local bIron = self:GetIronSights()
+        lerpFOV = Lerp(time, lerpFOV, bIron and self.IronSightsFOV or 1)
+
+        lerpLastUpdate = CurTime()
+    end
 
     return fov * lerpFOV
 end

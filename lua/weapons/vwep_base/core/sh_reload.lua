@@ -1,5 +1,3 @@
-
-
 function VWEP:CanReload()
     local ply = self:GetOwner()
     if ( !IsValid(ply) ) then return false end
@@ -27,47 +25,58 @@ function VWEP:Reload()
     self:SetIronSights(false)
     self:SetReloading(true)
 
-    ply:SetAnimation(PLAYER_RELOAD)
-
     if ( self.Cycling.Enabled ) then
         if ( self.Cycling.Automatic ) then
-            local _, duration = self:PlayAnimation(self.Cycling.SequenceEntry, self.Cycling.PlaybackRate)
-            duration = duration + self.Cycling.Delay
+            local delayAnimation = self.Cycling.DelayAnimation or self.Cycling.Delay
 
-            self:QueueIdle()
+            if ( CLIENT ) then
+                ply:SetAnimation(PLAYER_RELOAD)
+            end
 
-            self:SetNextPrimaryFire(CurTime() + duration)
-            self:SetNextSecondaryFire(CurTime() + duration)
-
-            timer.Create("VWEP.Cycling." .. self:EntIndex(), duration, 0, function()
+            timer.Create("VWEP.Cycling.Animation." .. self:EntIndex(), delayAnimation, 0, function()
                 if ( !IsValid(self) ) then return end
+
+                if ( CLIENT ) then
+                    ply:SetAnimation(PLAYER_RELOAD)
+                end
+            end)
+
+            timer.Create("VWEP.Cycling." .. self:EntIndex(), self.Cycling.Delay, 0, function()
+                if ( !IsValid(self) ) then return end
+
+                // Reset the timer incase we set it to 0
+                timer.Adjust("VWEP.Cycling." .. self:EntIndex(), self.Cycling.Delay, 0)
 
                 if ( self:Clip1() < self.Primary.ClipSize ) then
                     // Reset the animation so we can replay the cycling animation
-                    self:PlayAnimation(self.Cycling.SequenceEntry, self.Cycling.PlaybackRate)
+                    self:ResetAnimation()
 
                     timer.Simple(0, function()
                         local _, duration = self:PlayAnimation(self.Cycling.Sequence, self.Cycling.PlaybackRate)
                         self:QueueIdle()
-                    end)
 
-                    self:SetNextPrimaryFire(CurTime() + duration)
-                    self:SetNextSecondaryFire(CurTime() + duration)
+                        self:SetNextPrimaryFire(CurTime() + duration)
+                        self:SetNextSecondaryFire(CurTime() + duration)
+                    end)
 
                     local cycleSound, cycleSoundLevel, cycleSoundPitch, cycleSoundVolume, cycleSoundChannel = self.Cycling.Sound, self.Cycling.SoundLevel, self.Cycling.SoundPitch, self.Cycling.SoundVolume, self.Cycling.SoundChannel
                     self:EmitSound(cycleSound, cycleSoundLevel or 60, cycleSoundPitch or 100, cycleSoundVolume or 1, cycleSoundChannel or CHAN_WEAPON)
 
+                    ply:RemoveAmmo(1, self.Primary.Ammo)
                     self:SetClip1(self:Clip1() + 1)
                 else
                     timer.Remove("VWEP.Cycling." .. self:EntIndex())
+                    timer.Remove("VWEP.Cycling.Animation." .. self:EntIndex())
 
-                    local _, duration = self:PlayAnimation(self.Cycling.SequenceExit, self.Cycling.PlaybackRate)
-                    self:QueueIdle()
+                    if ( self.Cycling.SequenceExit ) then
+                        local _, duration = self:PlayAnimation(self.Cycling.SequenceExit, self.Cycling.PlaybackRate)
+                        self:QueueIdle()
 
-                    self:SetNextPrimaryFire(CurTime() + duration)
-                    self:SetNextSecondaryFire(CurTime() + duration)
+                        self:SetNextPrimaryFire(CurTime() + duration)
+                        self:SetNextSecondaryFire(CurTime() + duration)
+                    end
 
-                    timer.Simple(duration, function()
+                    timer.Simple(duration or 0, function()
                         if ( !IsValid(self) ) then return end
 
                         if ( self.PreReloadFinish ) then
@@ -82,6 +91,15 @@ function VWEP:Reload()
                     end)
                 end
             end)
+
+            if ( self.Cycling.SequenceEntry ) then
+                local _, duration = self:PlayAnimation(self.Cycling.SequenceEntry, self.Cycling.PlaybackRate)
+
+                self:SetNextPrimaryFire(CurTime() + duration)
+                self:SetNextSecondaryFire(CurTime() + duration)
+            else
+                timer.Adjust("VWEP.Cycling." .. self:EntIndex(), 0, 0)
+            end
         else
             local _, duration = self:PlayAnimation(self.Cycling.SequenceEntry, self.Cycling.PlaybackRate)
             self:QueueIdle()
@@ -96,6 +114,8 @@ function VWEP:Reload()
                 local ammoToTake = math.min(ammo, ply:GetAmmoCount(self.Primary.Ammo))
                 ply:RemoveAmmo(ammoToTake, self.Primary.Ammo)
                 self:SetClip1(self:Clip1() + ammoToTake)
+
+                ply:SetAnimation(PLAYER_RELOAD)
 
                 local _, duration = self:PlayAnimation(self.Cycling.Sequence, self.Cycling.PlaybackRate)
                 self:QueueIdle()
@@ -143,6 +163,8 @@ function VWEP:Reload()
         self:QueueIdle()
 
         self:SetNextPrimaryFire(CurTime() + duration)
+
+        ply:SetAnimation(PLAYER_RELOAD)
 
         local reloadSound, reloadSoundLevel, reloadSoundPitch, reloadSoundVolume, reloadSoundChannel = self.Reloading.Sound, self.Reloading.SoundLevel, self.Reloading.SoundPitch, self.Reloading.SoundVolume, self.Reloading.SoundChannel
         self:EmitSound(reloadSound, reloadSoundLevel or 60, reloadSoundPitch or 100, reloadSoundVolume or 1, reloadSoundChannel or CHAN_WEAPON)

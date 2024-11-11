@@ -11,6 +11,13 @@ function VWEP:PlayAnimation(anim, rate)
     return sequence, vm:SequenceDuration(sequence) / vm:GetPlaybackRate()
 end
 
+function VWEP:ResetAnimation()
+    local vm = self:GetOwner():GetViewModel()
+    if ( !IsValid(vm) ) then return end
+
+    vm:ResetSequence(vm:LookupSequence("idle"))
+end
+
 function VWEP:GetShootGesture()
     local gesture = self.Primary.Gesture or ACT_HL2MP_GESTURE_RANGE_ATTACK_PISTOL
     if ( self:GetIronSights() ) then

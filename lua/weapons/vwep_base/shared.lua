@@ -220,7 +220,6 @@ function VWEP:QueueIdle(duration)
 
     duration = duration or vm:SequenceDuration() / vm:GetPlaybackRate()
     duration = math.Round(duration, 2)
-    duration = duration + 0.1
 
     self:SetNextIdle(CurTime() + duration)
 end
@@ -257,8 +256,8 @@ function VWEP:Think()
     local ply = self:GetOwner()
     if ( !IsValid(ply) ) then return end
 
-    self:ThinkIronSights()
     self:ThinkIdle()
+    self:ThinkIronSights()
     self:ThinkFireModes()
 end
 
