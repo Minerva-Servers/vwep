@@ -20,7 +20,7 @@ function VWEP:ShootBullet(damage, num_bullets, aimcone)
     bullet.Num = num_bullets
     bullet.Src = self:GetOwner():GetShootPos()
     bullet.Dir = self:GetOwner():GetAimVector()
-    bullet.Spread = Vector(aimcone, aimcone, aimcone)
+    bullet.Spread = Vector(aimcone, aimcone, 0)
     bullet.Tracer = 1
     bullet.TracerName = self.Effects.TracerEffect
     bullet.Force = damage * 0.5
