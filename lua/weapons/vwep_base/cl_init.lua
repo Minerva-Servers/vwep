@@ -1,5 +1,4 @@
 VWEP = SWEP
-
 vwep.util:Include("shared.lua")
 
 local lerpFOV

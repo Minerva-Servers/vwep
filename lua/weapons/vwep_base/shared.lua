@@ -1,3 +1,4 @@
+VWEP = SWEP
 vwep.util:IncludeDir("weapons/vwep_base/core")
 
 // Information

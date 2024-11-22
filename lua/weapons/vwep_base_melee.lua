@@ -102,8 +102,9 @@ SWEP.WorldModelRenderFX = kRenderFxNone // Worldmodel render fx
 function SWEP:PrimaryAttack()
     if ( !self:CanPrimaryAttack() ) then return end
 
-    if ( self.PrePrimaryAttack ) then
-        self:PrePrimaryAttack()
+    local prePrimaryAttack = self.PrePrimaryAttack
+    if ( isfunction(prePrimaryAttack) ) then
+        if ( prePrimaryAttack(self) == false ) then return end
     end
 
     if ( self.Primary.Sound ) then
