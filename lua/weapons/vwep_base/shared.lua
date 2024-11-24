@@ -290,6 +290,18 @@ function VWEP:Holster()
     self:SetReloading(false)
     self:SetNextIdle(0)
 
+    -- We might've set the viewmodel material to something else, so we need to reset it
+    if ( CLIENT ) then
+        timer.Simple(0, function()
+            if ( IsValid(self) and IsValid(self:GetOwner()) ) then
+                local vm = self:GetOwner():GetViewModel()
+                if ( IsValid(vm) ) then
+                    vm:SetMaterial("")
+                end
+            end
+        end)
+    end
+
     if ( self.PostHolster ) then
         self:PostHolster()
     end
