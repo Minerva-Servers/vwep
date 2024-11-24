@@ -39,11 +39,11 @@ function VWEP:EnabledDevMode()
 end
 
 function VWEP:DrawHUD()
-    if ( self.PostDrawHUD ) then
-        self:PostDrawHUD()
+    if ( self.PreDrawHUD ) then
+        self:PreDrawHUD()
     end
 
-    if ( self.PastDrawHUD ) then
-        self:PastDrawHUD()
+    if ( self.PostDrawHUD ) then
+        self:PostDrawHUD()
     end
 end
