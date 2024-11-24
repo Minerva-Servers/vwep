@@ -34,11 +34,14 @@ function VWEP:GetViewModelPosition(pos, ang)
     return pos, ang
 end
 
+VWEP.ViewModelElementsStored = VWEP.ViewModelElementsStored or {}
+
 function VWEP:PreDrawViewModel(vm, weapon, ply)
     if ( !IsValid(vm) ) then return end
     if ( !IsValid(weapon) ) then return end
     if ( !IsValid(ply) ) then return end
 
+    vm:SetModel(self.ViewModel or "")
     vm:SetMaterial(self.ViewModelMaterial or "")
     vm:SetColor(self.ViewModelColor or Color(255, 255, 255, 255))
     vm:SetRenderMode(self.ViewModelRenderMode or RENDERMODE_NORMAL)
@@ -74,6 +77,53 @@ function VWEP:PreDrawViewModel(vm, weapon, ply)
             light.G = col.G
             light.B = col.B
             light.DieTime = CurTime() + ( v.DieTime or 0.1 )
+        end
+    end
+
+    if ( self.ViewModelElements and #self.ViewModelElements > 0 ) then
+        for k, v in ipairs(self.ViewModelElements) do
+            if ( !v.Model or !v.Bone ) then continue end
+
+            local element = VWEP.ViewModelElementsStored[k]
+            if ( !element ) then
+                element = ClientsideModel(v.Model, RENDERGROUP_BOTH)
+                element:SetNoDraw(true)
+
+                VWEP.ViewModelElementsStored[k] = element
+            end
+
+            local bone = vm:LookupBone(v.Bone)
+            if ( !bone ) then continue end
+
+            local pos, ang = vm:GetBonePosition(bone)
+            if ( !pos or !ang ) then continue end
+
+            pos = pos + ang:Forward() * v.Pos.x + ang:Right() * v.Pos.y + ang:Up() * v.Pos.z
+            ang:RotateAroundAxis(ang:Right(), v.Ang.x)
+            ang:RotateAroundAxis(ang:Up(), v.Ang.y)
+            ang:RotateAroundAxis(ang:Forward(), v.Ang.z)
+
+            element:SetPos(pos)
+            element:SetAngles(ang)
+            element:SetModelScale(v.Scale or 1, 0)
+            element:SetMaterial(v.Material or "")
+            element:SetColor(v.Color or Color(255, 255, 255, 255))
+            element:SetRenderMode(v.RenderMode or RENDERMODE_NORMAL)
+            element:SetRenderFX(v.RenderFX or kRenderFxNone)
+
+            if ( ( v.Skin or 0 ) != element:GetSkin() ) then
+                element:SetSkin(v.Skin or 0)
+            end
+
+            for k, v in pairs(v.Bodygroups or {}) do // don't use ipairs, can't guarantee sequential order
+                if ( !isnumber(k) or !isnumber(v) ) then continue end
+
+                if ( element:GetBodygroup(k) != v ) then
+                    element:SetBodygroup(k, v)
+                end
+            end
+
+            element:DrawModel()
         end
     end
 end
