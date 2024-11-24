@@ -350,7 +350,7 @@ function SWEP:ThinkIdle()
 
     if ( CurTime() > self:GetNextIdle() ) then
         self:SetNextIdle(0)
-        self:PlayAnimation(self:Clip1() > 0 and ( self.IdleAnim or ACT_VM_IDLE ) or ( self.EmptyAnim or ACT_VM_IDLE_EMPTY ))
+        self:PlayAnimation(self.IdleAnim or ACT_VM_IDLE, self.IdlePlaybackRate or 1)
     end
 end
 
