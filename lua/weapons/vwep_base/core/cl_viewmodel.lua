@@ -31,6 +31,12 @@ function VWEP:GetViewModelPosition(pos, ang)
     pos = pos + offset.y * ang:Forward() * lerpIronInverted
     pos = pos + offset.z * ang:Up() * lerpIronInverted
 
+    local offsetAng = self.ViewModelOffsetAng or Angle()
+
+    ang:RotateAroundAxis(ang:Right(), offsetAng.p * lerpIronInverted)
+    ang:RotateAroundAxis(ang:Up(), offsetAng.y * lerpIronInverted)
+    ang:RotateAroundAxis(ang:Forward(), offsetAng.r * lerpIronInverted)
+
     return pos, ang
 end
 
@@ -84,12 +90,12 @@ function VWEP:PreDrawViewModel(vm, weapon, ply)
         for k, v in ipairs(self.ViewModelElements) do
             if ( !v.Model or !v.Bone ) then continue end
 
-            local element = VWEP.ViewModelElementsStored[k]
+            local element = self.ViewModelElementsStored[k]
             if ( !element ) then
                 element = ClientsideModel(v.Model, RENDERGROUP_BOTH)
                 element:SetNoDraw(true)
 
-                VWEP.ViewModelElementsStored[k] = element
+                self.ViewModelElementsStored[k] = element
             end
 
             local bone = vm:LookupBone(v.Bone)
