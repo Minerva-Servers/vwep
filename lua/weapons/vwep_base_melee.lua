@@ -143,21 +143,23 @@ function SWEP:ClubAttack()
     timer.Create("VWEP.ClubAttack." .. self:EntIndex() .. "." .. CurTime(), self.Primary.Delay, 1, function()
         if ( !IsValid(self) or !IsValid(ply) ) then return end
 
+
+        trace = {}
+        trace.start = ply:GetShootPos()
+        trace.endpos = trace.start + ply:GetAimVector() * self.Primary.Range
+        trace.filter = ply
+        trace.mask = MASK_SHOT_HULL
+        trace.mins = Vector(-self.Primary.HullSize, -self.Primary.HullSize, -self.Primary.HullSize)
+        trace.maxs = Vector(self.Primary.HullSize, self.Primary.HullSize, self.Primary.HullSize)
+        
         ply:LagCompensation(true)
+        trace = util.TraceHull(trace)
+        ply:LagCompensation(false)
 
-        if ( SERVER ) then
-            trace = {}
-            trace.start = ply:GetShootPos()
-            trace.endpos = trace.start + ply:GetAimVector() * self.Primary.Range
-            trace.filter = ply
-            trace.mask = MASK_SHOT_HULL
-            trace.mins = Vector(-self.Primary.HullSize, -self.Primary.HullSize, -self.Primary.HullSize)
-            trace.maxs = Vector(self.Primary.HullSize, self.Primary.HullSize, self.Primary.HullSize)
-            trace = util.TraceHull(trace)
+        if ( trace.Hit ) then
+            hit = trace.Entity
 
-            if ( trace.Hit ) then
-                hit = trace.Entity
-
+            if ( SERVER ) then
                 if ( IsValid(hit) ) then
                     dmg = DamageInfo()
                     dmg:SetAttacker(ply)
@@ -170,18 +172,7 @@ function SWEP:ClubAttack()
                     hit:TakeDamageInfo(dmg)
                 end
             end
-        else
-            trace = {}
-            trace.start = ply:GetShootPos()
-            trace.endpos = trace.start + ply:GetAimVector() * self.Primary.Range
-            trace.filter = ply
-            trace.mask = MASK_SHOT_HULL
-            trace.mins = Vector(-self.Primary.HullSize, -self.Primary.HullSize, -self.Primary.HullSize)
-            trace.maxs = Vector(self.Primary.HullSize, self.Primary.HullSize, self.Primary.HullSize)
-            trace = util.TraceHull(trace)
         end
-
-        ply:LagCompensation(false)
 
         if ( self.PostClubAttack ) then
             self:PostClubAttack(trace, hit, dmg)
